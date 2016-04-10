@@ -31,8 +31,6 @@ export default {
 
 
 <template>
-  <form>
     <textarea id="answerEditor"></textarea>
-  </form>
 
 </template>
