@@ -1,0 +1,14 @@
+/* clear both */
+.clear {
+  clear: both !important;
+}
+
+
+
+/* 页面切换效果*/
+.fade-transition {
+  transition: opacity .2s ease;
+}
+.fade-enter, .fade-leave {
+  opacity: 0;
+}
