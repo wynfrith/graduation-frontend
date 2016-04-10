@@ -1,4 +1,4 @@
-# 毕设前端
+# graduation-frontend
 
 > vue单页应用
 
