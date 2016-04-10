@@ -2,6 +2,10 @@
 
 > vue单页应用
 
+## demo
+
+http://vue.wynfrith.me
+
 ## 部署
 
 ``` bash
