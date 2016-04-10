@@ -13,7 +13,7 @@ http://vue.wynfrith.me
 # 安装依赖
 npm install
 
-# 调试开发, 8080端口
+# 调试开发 (http://127.0.0.1:8080)
 npm run dev
 
 # 打包部署
