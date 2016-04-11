@@ -75,26 +75,6 @@
           <template v-for="answer in data.answers">
             <qa :data="answer"></qa>
           </template>
-          <!-- <div class="post-item">
-            <vote :counts="3"></vote>
-            <div class="content">
-              <div class="fmt">
-                PHP的类名本身是不区分大小写的，但是一般的类加载器并不转换类名，而是直接根据类名查找对应的php代码文件。这样就造成在一些文件名称大小写敏感的操作系统下好像类名也是大小写敏感一样。而Windows的文件名是大小写不敏感的，所有本身和可以适应PHP类名大小写不敏感的加载。
-              </div>
-              <div class="topic">
-                <span>刚刚发布</span>
-                <a class="ui comment-btn">评论</a>
-                <div class="post-author">
-                  <img src="http://my-ghost.b0.upaiyun.com/avator.jpg" alt="" class="ui avatar image"/>
-                  <span><a href="#">wynfrith</a></span>
-                </div>
-              </div>
-              <div class="comments-box">
-                <comments :datas="comments" ></comments>
-              </div>
-
-            </div>
-          </div> -->
 
           <div class="ui divider"></div>
 

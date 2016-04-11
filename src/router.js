@@ -35,6 +35,10 @@ export default function routerMap(router) {
       '/u/:username': {
         name: 'profile',
         component: require('./components/profile.vue')
+      },
+      '/search': {
+        name: 'search',
+        component: require('./components/search.vue')
       }
   })
 

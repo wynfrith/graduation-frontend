@@ -16,6 +16,5 @@
 .ui.pagination.menu.main-pagination {
   margin: 1rem 0;
   font-size: .82rem;
-
 }
 </style>

@@ -91,7 +91,7 @@
   }
   .vote p{
     font-size: 1.15rem;
-    padding-top: 25px;
+    padding-top: 26px;
     color: rgba(0,0,0,.6);
   }
 </style>

@@ -12,14 +12,25 @@
         <div class="ui search item">
           <div class="ui icon input">
             <input class="prompt" type="text" placeholder="搜索问题或标签">
-            <i class="search icon"></i>
+            <i class="search icon link" @click="search"></i>
           </div>
           <div class="results"></div>
         </div>
-        <a v-link="{ name: 'markdown' }" class="item">markdown</a>
+        <!-- <a v-link="{ name: 'markdown' }" class="item">markdown</a> -->
         <a v-link="{ name: 'signin' }" class="item">注册</a>
         <a v-link="{ name: 'login' }" class="item">登陆</a>
       </div>
     </div>
   </div>
 </template>
+
+
+<script>
+  export default {
+    methods: {
+      search() {
+        this.$router.go({name: 'search'})
+      }
+    }
+  }
+</script>

@@ -5,7 +5,7 @@
     name: "App",
 
     components: {
-      Navbar
+      'navbar':Navbar
     }
   }
 </script>
