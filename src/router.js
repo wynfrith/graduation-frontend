@@ -39,6 +39,10 @@ export default function routerMap(router) {
       '/search': {
         name: 'search',
         component: require('./components/search.vue')
+      },
+      '/setting': {
+        name: 'setting',
+        component: require('./components/setting.vue')
       }
   })
 

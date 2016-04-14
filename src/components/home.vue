@@ -78,8 +78,6 @@ export default {
                 <a class=" ui green button fluid" v-link="{name: 'post'}">提出问题</a>
               </div>
             </div>
-          </div>
-          <div class="ui cards">
             <div class="card">
               <div class="content">
                 <b>推荐回答</b>
