@@ -3,14 +3,16 @@
     data() {
       return {
         myform: {},
-        username: '', // or email
-        password: ''
+        model: {}
       }
     },
     methods: {
       onSubmit() {
         if(this.myform.$valid==true)
           alert("提交成功");
+      },
+      isError(name) {
+        return this.myform[name].$dirty && this.myform[name].$invalid;
       }
     }
   }
@@ -23,31 +25,33 @@
       <h2 class="ui green image header">用户登录</h2>
       <form v-form name="myform" class="ui large form" v-on:submit.prevent="onSubmit" >
         <div class="ui stacked segment">
-          <div class="errors" v-if="myform.$submitted">
+          <div class="sumbit-errors errors" v-if="myform.$submitted">
             <p v-if="myform.username.$error.required">请输入用户名或邮箱</p>
             <p v-if="myform.password.$error.required">请输入密码</p>
           </div>
-          <div class="field">
+          <div class="field " :class="{'error': isError('username')}">
             <div class="ui left icon input">
               <i class="user icon"></i>
               <input
                 type="text"
                 name="username"
-                v-model="username"
+                v-model="model.username"
                 v-form-ctrl
                 required
+                maxlength="30"
                 placeholder="用户名或邮箱">
             </div>
           </div>
-          <div class="field">
+          <div class="field" :class="{'error': isError('password')}">
             <div class="ui left icon input">
               <i class="lock icon"></i>
               <input
                 type="password"
                 name="password"
-                v-model="password"
+                v-model="model.password"
                 v-form-ctrl
                 required
+                maxlength="30"
                 placeholder="输入密码">
             </div>
           </div>
@@ -70,15 +74,7 @@
 </template>
 
 <style scoped media="screen">
-    .errors {
-      font-size: .9rem;
-      padding: 10px 0;
-    }
-    .errors p{
-      background-color: #FFACA6;
-      margin: 0 0 .5rem;
-      padding: 2px;
-    }
+
     .column {
       margin-top: 60px;
       max-width: 450px;

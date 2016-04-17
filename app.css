@@ -17,3 +17,17 @@
 .jcrop-holder {
   margin: 0 auto !important;
 }
+
+/* 表单验证错误的颜色 */
+.ui.form .field.error input{
+  border-color: #FF9090 !important;
+}
+
+.sumbit-errors.errors {
+  font-size: .9rem;
+}
+.sumbit-errors.errors p{
+  background-color: #FFACA6;
+  margin: 0 0 .5rem;
+  padding: 2px;
+}
