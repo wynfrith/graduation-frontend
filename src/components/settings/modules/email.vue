@@ -1,3 +1,21 @@
+<script>
+export default {
+  data() {
+    return {
+      form: {},
+      model: {}
+    }
+  },
+  methods: {
+    onSubmit() {
+
+    },
+    isError(name) {
+      return this.form[name].$dirty && this.form[name].$invalid;
+    }
+  }
+}
+</script>
 <template id="">
     <div class="ui centered grid">
       <div class="fourteen wide column">
@@ -5,7 +23,7 @@
         <div class="ui divider">
 
         </div>
-        <form class="ui form">
+        <form name="form" v-form class="ui form" @submit.prevent="onSubmit">
           <div class="inline fields">
             <div class="two wide field">
               <label>当前邮箱:</label>
@@ -16,14 +34,15 @@
           </div>
           <div class="inline fields">
             <div class="two wide field">
-              <label>新邮箱地址:</label>
+              <label for="email">新邮箱地址:</label>
             </div>
-            <div class="eight wide field">
-              <input type="email" placeholder="输入新的邮箱">
+            <div class="eight wide field" :class="{'error': isError('email')}">
+              <input id="email" name="email" type="email" placeholder="输入新的邮箱"
+                 v-form-ctrl required v-model="model.email">
             </div>
           </div>
           <div class="field">
-            <button type="button" class="ui green button">修改邮箱</button>
+            <button type="submit" class="ui green button">修改邮箱</button>
           </div>
 
         </form>
