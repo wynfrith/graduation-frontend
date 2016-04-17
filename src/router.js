@@ -43,6 +43,10 @@ export default function routerMap(router) {
       '/setting': {
         name: 'setting',
         component: require('./components/settings/setting.vue')
+      },
+      '/notify': {
+        name: 'notify',
+        component: require('./components/notify.vue')
       }
 
   })
