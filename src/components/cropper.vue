@@ -1,13 +1,16 @@
 <script>
   import CropModal from './modules/crop-modal.vue'
+  import Modal from './modules/modal.vue'
   export default {
     components: {
-      'cropper': CropModal
+      'cropper': CropModal,
+      'modal': Modal
     },
     data() {
       return {
         avatarUrl: '',
-        showCrop: false
+        showCrop: false,
+        showModal: false
       }
     },
     methods: {
@@ -29,11 +32,10 @@
 
 </script>
 <template id="">
-  <form class="" action="index.html" method="post">
     <div class="crop-box">
       <input id="img" type="file" @change="upload" @click="clear">
+        <modal :show.sync="showCrop" :img="avatarUrl"></modal>
     </div>
 
-    <cropper :show.sync="showCrop" :img="avatarUrl"><cropper>
-  </form>
+
 </template>

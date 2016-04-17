@@ -12,3 +12,8 @@
 .fade-enter, .fade-leave {
   opacity: 0;
 }
+
+/* 头像剪裁居中 */
+.jcrop-holder {
+  margin: 0 auto !important;
+}

@@ -1,5 +1,5 @@
 <script>
-import CropModal from '../../modules/crop-modal.vue'
+import CropModal from '../../modules/modal.vue'
 
 export default {
   components: {
@@ -105,8 +105,8 @@ export default {
         <div class="ui inverted dimmer">
           <div class="content">
             <div class="center">
-              <div class="ui green inverted button">修改头像</div>
-              <input id="img" type="file" @change="upload" @click="clear">
+              <input id="img" type="file" @change="upload" @click="clear" style="display:none">
+              <label for="img" class="ui green inverted button">修改头像</label>
             </div>
           </div>
         </div>

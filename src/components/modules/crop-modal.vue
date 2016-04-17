@@ -33,6 +33,7 @@ export default {
   watch: {
     'show': function() {
       if (this.show) {
+        this.open()
         // create jcrop and open modal
         let api;
         this.open()
@@ -48,6 +49,8 @@ export default {
 
       } else {
         // destory jcrop
+
+
         if(this.jcropApi) {
           this.jcropApi.destroy();
           $('#image').removeAttr('style');
@@ -79,7 +82,7 @@ export default {
     top: 0;
     padding: 0 !important;
     margin: 15px 0;
-    width: 600px;
+    /*width: 600px;*/
     height: 300px;
   }
   #avatarModal .center.content .jcrop-holder {
