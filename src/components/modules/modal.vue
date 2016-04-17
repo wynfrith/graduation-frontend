@@ -83,6 +83,7 @@
   height: 100%;
   /*background: rgba(0, 0, 0, 0.7);*/
   background-color: rgba(0,0,0,.6);
+  z-index: 10000;
   display: table;
   transition: opacity .3s ease;
   }

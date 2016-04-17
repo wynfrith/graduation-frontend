@@ -31,8 +31,12 @@
       </div>
     </div>
     <div class="inline content">
-      <a v-link="'q/' + id" class="ui header blue">{{title}}
-        <span class="ui mini teal label">brown</span></a>
+      <a v-link="'q/' + id" class="ui header blue">{{title}}</a>
+      <span>
+        <a class="ui mini teal label">javascript<a>
+        <a class="ui mini teal label">java</a>
+      </span>
+
       <p class="meta">
         <a v-link="'u/' + author">{{author}}</a> {{date | beautyDate }}
       </p>

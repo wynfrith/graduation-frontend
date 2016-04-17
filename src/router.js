@@ -43,10 +43,6 @@ export default function routerMap(router) {
       '/setting': {
         name: 'setting',
         component: require('./components/settings/setting.vue')
-      },
-      '/cropper': {
-        name: 'cropper',
-        component: require('./components/cropper.vue')
       }
 
   })

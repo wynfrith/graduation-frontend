@@ -41,6 +41,13 @@ export default {
   <div class="ui container">
     <div class="ui two column center grid">
       <div class="twelve wide column">
+        <div class="ui message">
+          <i class="close icon"></i>
+          <div class="header">
+            javascript
+          </div>
+          <p>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型</p>
+        </div>
         <div class="ui top attached secondary pointing menu">
           <a class="item" v-bind:class="{'active': actived == 'new' }" @click="load('new')">最新发布</a>
           <a class="item" v-bind:class="{'active': actived == 'hot' }" @click="load('hot')">最热问题</a>
@@ -80,12 +87,22 @@ export default {
             </div>
             <div class="card">
               <div class="content">
-                <b>推荐回答</b>
+                <b><a v-link="{name: 'home'}">推荐回答</a></b>
                 <div class="ui divider"></div>
                 <ul>
                   <li><a href="/">这是一条推荐</a></li>
                   <li><a href="/">react-redux异步读取数据</a></li>
                   <li><a href="/">react 排序功能</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="content">
+                <b><a v-link="{name: 'tags'}">热门标签</a></b>
+                <div class="ui divider"></div>
+                <ul>
+                  <li>javascrpt</li>
+                  <li>java</li>
                 </ul>
               </div>
             </div>

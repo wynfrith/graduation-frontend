@@ -33,7 +33,6 @@
         <!-- <a v-link="{ name: 'markdown' }" class="item">markdown</a> -->
         <a v-link="{ name: 'signin' }" class="item">注册</a>
         <a v-link="{ name: 'login' }" class="item">登陆</a>
-        <a v-link="{ name: 'cropper' }" class="item">cropper</a>
         <a class="item icon">
           <i class="alarm outline icon "></i>
           <div class="floating mini ui green empty circular label"></div>
