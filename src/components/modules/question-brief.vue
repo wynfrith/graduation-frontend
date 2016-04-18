@@ -31,26 +31,25 @@
       </div>
     </div>
     <div class="inline content">
-      <a v-link="'q/' + id" class="ui header blue">{{title}}</a>
-      <span>
-        <a class="ui mini teal label">javascript<a>
-        <a class="ui mini teal label">java</a>
+      <a v-link="'q/' + id" class="ui header title">{{title}}</a>
+      <span class="tags-box">
+        <a class="ui mini teal label" v-for="tag in tags">{{ tag }}<a>
       </span>
 
       <p class="meta">
-        <a v-link="'u/' + author">{{author}}</a> {{date | beautyDate }}
+        <a v-link="'u/' + author">{{author}}</a> <span>{{date | beautyDate }}</span>
       </p>
     </div>
   </div>
 </template>
 
 <style scoped media="screen">
-.item > .inline.content {
+.item > .inline.content{
   display: inline-block;
 }
 
 .item > .rank-list {
-  margin-top: 4px;
+  margin-top: 3px;
   display: inline-block;
   vertical-align: middle;
   vertical-align: top;
@@ -67,6 +66,28 @@
   vertical-align: top;
 }
 
-.ui.header {
+a.ui.header.title {
+  vertical-align: top;
+  display: inline-block;;
+  font-size: 1.1rem;
+  color: #4CB77E !important;
+}
+a.ui.header.title:hover {
+  color: #4CB77E !important;
+  text-decoration: underline;
+}
+.tags-box {
+  vertical-align: top;
+}
+.meta a{
+  color: #999;
+  font-size: .9rem;
+}
+.meta span{
+  font-size: .9rem;
+  color: #999
+}
+.meta a:hover {
+  text-decoration: underline;
 }
 </style>

@@ -5,12 +5,16 @@
       delay: {
         type: Number,
         'default': 1500
+      },
+      color: {
+        type: String,
+        'default': 'red'
       }
     },
     data() {
       return {
         message: '你好',
-        show: true
+        show: false
       }
     },
     watch: {
@@ -31,8 +35,10 @@
 </script>
 
 <template >
-  <div class="notify" v-show="show" v-transition="notify">
-  <div class="ui orange message">您的密码不能为空</div>
+  <div class="notify" v-show="show" transition="notify">
+    <div class="ui message"
+      :class="{ 'red': color == 'red' || color == '', 'orange': color == 'orange', 'green': color == 'green'}"
+      >{{message}}</div>
   </div>
 </template>
 
@@ -44,11 +50,14 @@
   width: 100%;
   z-index: 999;
   text-align: center;
-  -webkit-transition: opacity .4s ease;
-  transition: opacity .4s ease;
+  -webkit-transition: all linear .25s;
+  transition: all linear .25s;
+  overflow: hidden;
+  height: 42px;
   top: 0px;
 }
 .notify .ui.message {
+  height: 100%;
   display: inline-block;
   border-radius: 3px;
   padding: .8rem 5rem;
@@ -57,7 +66,7 @@
 
 .notify-enter,
 .notify-leave {
-  opacity: 0;
+  margin-top: -42px;
 }
 
 </style>

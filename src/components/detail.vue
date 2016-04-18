@@ -3,16 +3,23 @@
   import Comments from './modules/comments/list.vue'
   import Editor from './modules/editor/editor.vue'
   import Qa from './modules/qa/qa.vue'
+  import Message from './modules/message.vue'
 
   export default {
     components: {
       'vote': Vote,
       'qa': Qa,
       'comments': Comments,
-      'editor': Editor
+      'editor': Editor,
+      'message': Message
     },
     data() {
       return {
+        errorField: '',
+        editorContent: '',
+        errorMsg: '',
+        okMsg: '',
+
         data: {
           question: {
             id: 1,
@@ -49,13 +56,35 @@
           }]
         }
       }
-
+    },
+    methods: {
+      onSubmit() {
+        if(this.editorContent.trim() == '') {
+          this.errorMsg= "请输入你要回答的内容!"
+          this.errorField = 'editorContent'
+        } else if (this.editorContent.trim().length < 5) {
+          this.errorMsg = "你的回答字数过少 (最少5字)"
+          this.errorField = 'editorContent'
+        }
+        else {
+          this.errorField = ''
+          this.okMsg = '提交成功'
+        }
+      }
+    },
+    watch: {
+      'editorContent': function () {
+        if (this.errorField == 'editorContent')
+          this.errorField = '';
+      }
     }
   }
 
 </script>
 
 <template>
+  <message :msg.sync="errorMsg" color="red"></message>
+  <message :msg.sync="okMsg" color="orange"></message>
   <div class="ui container">
     <div class="ui two column centered grid">
       <div class="left floated twelve wide column">
@@ -80,12 +109,12 @@
 
           <div class="ui container">
             <h5>你的答案</h5>
-            <form class="ui form">
-              <div class="field">
-                <editor></editor>
+            <form class="ui form" @submit.prevent="onSubmit">
+              <div class="field" :class="{'error': errorField == 'editorContent' }">
+                <editor :content.sync="editorContent" placeholder="写下你的答案 (最少5字)"></editor>
               </div>
               <div class="field">
-                <button class="ui submit green button right floated">提交答案</button>
+                <button type="sumbit" class="ui submit green button right floated">提交答案</button>
                 <div class="clear"></div>
               </div>
             </form>

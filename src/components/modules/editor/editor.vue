@@ -6,10 +6,15 @@
 <script>
 import SimpleMDE from 'simplemde'
 export default {
+  props: {
+    content: String,
+    placeholder: String
+  },
+
   ready() {
     const simplemde = new SimpleMDE({
       element: document.getElementById("answerEditor"),
-      placeholder: "写下你的答案",
+      placeholder: this.placeholder,
       spellChecker: false,
       status: false,
       promptURLs: true,
@@ -25,12 +30,17 @@ export default {
       },
       tabSize: 4
     });
+
+    simplemde.codemirror.on("change", () => {
+      this.content = simplemde.value();
+    });
+
   }
 }
 </script>
 
 
 <template>
-    <textarea id="answerEditor"></textarea>
+    <textarea id="answerEditor" ></textarea>
 
 </template>

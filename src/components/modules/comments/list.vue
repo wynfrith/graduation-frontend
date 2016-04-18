@@ -6,6 +6,11 @@ import Comment from './comment.vue'
    },
    props: {
      datas: Array
+   },
+   methods: {
+     onSubmit() {
+       alert('发表评论')
+     }
    }
  }
 
@@ -25,12 +30,12 @@ import Comment from './comment.vue'
         </template>
       </div>
 
-      <form class="ui form">
+      <form class="ui form" @submit.prevent="onSubmit">
         <div class="field">
-          <textarea rows="1" class="left floated" placeholder="询问更多信息或提出修改意见，请不要在评论里回答问题"></textarea>
-          <div class="ui icon teal basic button right floated">
+          <textarea rows="1" class="left floated" placeholder="询问更多信息或提出修改意见，请不要在评论里回答问题" required></textarea>
+          <button type="submit" class="ui icon teal basic button right floated">
             <i class="icon edit"></i> 评论
-          </div>
+          </button>
         </div>
       </form>
       <div class="clear">  </div>

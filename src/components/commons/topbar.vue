@@ -43,6 +43,7 @@
             <img src="https://octodex.github.com/images/octoliberty.png" alt="wynfrith" class="ui image avatar"/>
             </div>
             <div class="menu">
+              <a v-link="{name: 'post'}" class="item">我要提问</a>
               <a v-link="{ name: 'profile', params: { username: 'wynfrith'}}" class="item">我的主页</a>
               <a v-link="{name: 'setting'}" class="item">账号设置</a>
               <a href="#" class="item">注销</a>

@@ -22,6 +22,17 @@ export default {
           'javascript',
           'vue'
         ]
+      }, {
+        id: '2',
+        title: '豌豆荚这种动态生成内容的网页，应该怎么爬取呢？',
+        author: '孔亚洲',
+        votes: 15,
+        answers: 6,
+        views: 133,
+        date: new Date(),
+        tags: [
+          'c#'
+        ]
       }]
     }
   },
@@ -52,11 +63,10 @@ export default {
           <a class="item" v-bind:class="{'active': actived == 'new' }" @click="load('new')">最新发布</a>
           <a class="item" v-bind:class="{'active': actived == 'hot' }" @click="load('hot')">最热问题</a>
         </div>
-        <div class="ui bottom attached active tab segment" style="margin:0;">
+        <div class="ui bottom attached active tab segment" style="margin:0; padding: 6px 14px;">
           <div class="ui very relaxed divided list">
             <!-- 问题列表 -->
-            <li v-for="item in items">
-              <question-brief
+              <question-brief v-for="item in items"
                 :id="item.id"
                 :title="item.title"
                 :author="item.author"
@@ -67,7 +77,6 @@ export default {
                 :date="item.date"
               >
               </question-brief>
-            </li>
           </div>
 
         </div>

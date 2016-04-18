@@ -22,6 +22,24 @@
 .ui.form .field.error input{
   border-color: #FF9090 !important;
 }
+.ui.form .field.error .editor-toolbar {
+  border-color: #FF9090 !important;
+  opacity: 1;
+}
+.ui.form .field.error .editor-toolbar {
+  background: #fff6f6;
+  border-color: #FF9090;
+  opacity: 1;
+}
+.ui.form .field.error .editor-toolbar a {
+  color: #758594 !important;
+}
+.ui.form .field.error .CodeMirror {
+  border-bottom-color: #FF9090 ;
+  border-left-color: #FF9090 ;
+  border-right-color:#FF9090;
+  background: #FDFDFD;
+}
 
 .sumbit-errors.errors {
   font-size: .9rem;
