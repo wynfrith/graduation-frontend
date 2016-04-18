@@ -88,9 +88,10 @@
 </script>
 
 <template>
-  <message :msg.sync="errorMsg" color="red"></message>
-  <message :msg.sync="okMsg" color="orange"></message>
+
   <div class="ui container">
+    <message :msg.sync="errorMsg" color="red"></message>
+    <message :msg.sync="okMsg" color="orange"></message>
     <div class="ui two column centered grid">
       <div class="left floated twelve wide column">
         <div class="ui segment">

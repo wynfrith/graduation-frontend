@@ -57,9 +57,9 @@
   }
 </script>
 <template >
-  <message :msg.sync="msg"></message>
-  <message :msg.sync="okMsg" color="orange" :delay="2500"></message>
   <div class="ui container ">
+    <message :msg.sync="msg"></message>
+    <message :msg.sync="okMsg" color="orange" :delay="2500"></message>
     <div class="form-box">
       <form name="form" v-form class="ui form" @submit.prevent="onSubmit">
         <div class="field" :class="{'error': isError('title')}">
