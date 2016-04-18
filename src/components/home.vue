@@ -1,11 +1,13 @@
 <script>
 import QuestionBrief from './modules/question-brief.vue'
 import Pagination from './modules/pagination.vue'
+import Siderbar from './modules/sidebar/sidebar.vue'
 
 export default {
   components: {
     'question-brief': QuestionBrief,
-    'pagination': Pagination
+    'pagination': Pagination,
+    'siderbar': Siderbar
   },
   data() {
     return {
@@ -88,34 +90,7 @@ export default {
 
       </div>
       <div class="four wide column">
-          <div class="ui cards">
-            <div class="card">
-              <div class="content">
-                <a class=" ui green button fluid" v-link="{name: 'post'}">提出问题</a>
-              </div>
-            </div>
-            <div class="card">
-              <div class="content">
-                <b><a v-link="{name: 'home'}">推荐回答</a></b>
-                <div class="ui divider"></div>
-                <ul>
-                  <li><a href="/">这是一条推荐</a></li>
-                  <li><a href="/">react-redux异步读取数据</a></li>
-                  <li><a href="/">react 排序功能</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="card">
-              <div class="content">
-                <b><a v-link="{name: 'tags'}">热门标签</a></b>
-                <div class="ui divider"></div>
-                <ul>
-                  <li>javascrpt</li>
-                  <li>java</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+        <siderbar></siderbar>
       </div>
     </div>
   </div>

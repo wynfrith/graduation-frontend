@@ -27,7 +27,7 @@ export default {
 </script>
 <template >
   <div class="ui container">
-    <h2>所有标签</h2>
+    <h2>热门标签</h2>
     <div class="ui divider"></div>
     <div class="ui grid">
         <div class="four wide column" v-for="tag in tags">

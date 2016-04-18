@@ -40,7 +40,7 @@
         <a class="img-item">
           <div class="ui simple dropdown img-dropdown" >
             <div class="text">
-            <img src="https://octodex.github.com/images/octoliberty.png" alt="wynfrith" class="ui image avatar"/>
+            <img src="http://my-ghost.b0.upaiyun.com/avator.jpg" alt="wynfrith" class="ui image avatar"/>
             </div>
             <div class="menu">
               <a v-link="{name: 'post'}" class="item">我要提问</a>

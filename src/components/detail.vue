@@ -4,6 +4,9 @@
   import Editor from './modules/editor/editor.vue'
   import Qa from './modules/qa/qa.vue'
   import Message from './modules/message.vue'
+  import Recommend from './modules/sidebar/recommend.vue'
+  import HotTags from './modules/sidebar/hotTags.vue'
+
 
   export default {
     components: {
@@ -11,7 +14,9 @@
       'qa': Qa,
       'comments': Comments,
       'editor': Editor,
-      'message': Message
+      'message': Message,
+      'hot-tags': HotTags,
+      'recommend': Recommend
     },
     data() {
       return {
@@ -124,6 +129,12 @@
 
         </div>
       </div>
+      <div class="four wide column">
+        <div class="ui cards">
+          <recommend></recommend>
+          <hot-tags></hot-tags>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -131,11 +142,14 @@
 </template>
 
 <style scoped media="screen">
-  .ui.container .ui.segment {
-    padding: 20px 15px;
-  }
-  .field button.submit {
-    margin-right: 10px;
-  }
+.four.wide.column {
+  margin-top: 1px;
+}
+.ui.container .ui.segment {
+  padding: 20px 15px;
+}
+.field button.submit {
+  margin-right: 10px;
+}
 
 </style>
