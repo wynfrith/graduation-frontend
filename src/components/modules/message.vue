@@ -4,7 +4,7 @@
       msg: String,
       delay: {
         type: Number,
-        'default': 1500
+        'default': 1800
       },
       color: {
         type: String,

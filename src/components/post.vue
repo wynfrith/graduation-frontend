@@ -32,7 +32,7 @@
           this.msg = "请输入问题内容!"
           this.errorField = 'content'
         } else if (this.model.content.trim().length < 15) {
-          this.msg = "你的答案太少了吧! (15字以上)"
+          this.msg = "你的内容太少了吧! (15字以上)"
           this.errorField = 'content'
         } else {
           this.errorField = ''

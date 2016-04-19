@@ -3,6 +3,10 @@
   clear: both !important;
 }
 
+[v-cloak] {
+  display: none !important;
+}
+
 
 
 /* 页面切换效果*/
