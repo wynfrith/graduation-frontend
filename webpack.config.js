@@ -49,7 +49,9 @@ module.exports = {
     'vue': 'Vue',
     'vue-router': 'VueRouter',
     'vue-resource': 'VueResource',
-    'simplemde': 'SimpleMDE'
+    'simplemde': 'SimpleMDE',
+    'marked': 'marked',
+    'hljs': 'hljs'
   }
 }
 

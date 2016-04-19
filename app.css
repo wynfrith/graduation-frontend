@@ -1,12 +1,36 @@
+[v-cloak] {
+  display: none !important;
+}
+
 /* clear both */
 .clear {
   clear: both !important;
 }
 
-[v-cloak] {
-  display: none !important;
+/* markdown 渲染效果 */
+.fmt {
+  font-size: 1rem;
 }
 
+.fmt pre{ /* 代码 */
+  background-color: #F7F7F7;
+  padding: 6px 12px;
+  border-radius: 3px;
+}
+.fmt blockquote {
+  border-left: 2px solid #92D4BC;
+  background: #f6f6f6;
+  margin: 14px 0;
+  padding: 6px 20px;
+}
+.fmt p code {
+  background-color: #F1F1F1;
+  padding: 3px;
+  border-radius: 3px;
+}
+.fmt img {
+  max-width: 100%;
+}
 
 
 /* 页面切换效果*/

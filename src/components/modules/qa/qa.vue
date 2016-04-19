@@ -1,6 +1,14 @@
 <script>
 import Vote from '../../modules/vote.vue'
 import Comments from '../../modules/comments/list.vue'
+import HyperDown from 'hyperdown'
+import marked from 'marked'
+import hljs from 'hljs'
+marked.setOptions({
+  highlight: function (code) {
+    return hljs.highlightAuto(code).value;
+  }
+});
 export default {
   props: {
     data: Object
@@ -13,6 +21,10 @@ export default {
     return {
       isShow: false
     }
+  },
+  filters: {
+    // marked: function(value) {return new HyperDown().makeHtml(value);}
+    marked: marked
   }
 }
 
@@ -21,28 +33,43 @@ export default {
   <div class="post-item">
     <vote :counts="data.votes"></vote>
     <div class="content">
-      <div class="fmt">
-        {{ data.content }}
+      <div class="fmt" v-html="data.content | marked">
       </div>
       <div class="topic">
         <span>发布于5天前</span>
         <a class="ui comment-btn" @click="isShow = !isShow">评论</a>
         <div class="post-author">
           <img src="http://my-ghost.b0.upaiyun.com/avator.jpg" alt="" class="ui avatar image"/>
-          <span><a href="#">wynfrith</a></span>
+          <span><a v-link="{name: 'profile', params: { username: 'wynfrith'}}">wynfrith</a></span>
         </div>
       </div>
-
       <div class="comments-box" >
         <comments :datas="data.comments" v-show="isShow"></comments>
       </div>
-
-
     </div>
   </div>
 </template>
 
 <style scoped media="screen">
+.topic > span {
+  font-size: 1rem;
+}
+.topic > a {
+  color: rgba(105, 101, 101, 0.81);
+  font-size: 1rem;
+}
+.topic > a:hover {
+  color: #696565;
+  text-decoration: underline;
+}
+.post-author span a{
+  color: #60B173;
+  font-size: 1rem;
+}
+.post-author span a:hover{
+  color: rgba(74, 138, 89, 0.92);
+  /*text-decoration: underline;*/
+}
 a.ui.comment-btn {
   cursor: pointer;
 }

@@ -5,6 +5,12 @@
       author: String,
       content: String,
       date: null,
+    },
+    methods: {
+      reply() {
+        // 向父组件的发送消息,内容为 author
+        this.$dispatch('reply', this.author);
+      }
     }
   }
 
@@ -24,7 +30,7 @@
         {{ content }}
       </div>
       <div class="actions">
-        <a class="reply">回复</a>
+        <a class="reply" @click="reply">回复</a>
       </div>
     </div>
   </div>
@@ -32,6 +38,13 @@
 </template>
 
 <style scoped media="screen">
+  .ui.comments a.author {
+    font-weight: 500;
+    color: #60B173;
+  }
+  .ui.comments a.author:hover {
+    color: rgba(74, 138, 89, 0.92);
+  }
   .ui.comments .comment {
     margin: 0 10px 0 10px;
     border-bottom: 1px dashed #ccc;

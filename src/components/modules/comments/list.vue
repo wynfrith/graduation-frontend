@@ -7,9 +7,20 @@ import Comment from './comment.vue'
    props: {
      datas: Array
    },
+   data() {
+     return {
+       newComment: ''
+     }
+   },
    methods: {
      onSubmit() {
-       alert('发表评论')
+       // 检测正则 $@(username)[space]
+     }
+   },
+   events: {
+     'reply': function (msg) {
+       this.newComment = `@${msg} `
+       this.$els.commentInput.focus();
      }
    }
  }
@@ -32,7 +43,7 @@ import Comment from './comment.vue'
 
       <form class="ui form" @submit.prevent="onSubmit">
         <div class="field">
-          <textarea rows="1" class="left floated" placeholder="询问更多信息或提出修改意见，请不要在评论里回答问题" required></textarea>
+          <textarea rows="1" v-model="newComment" class="left floated" placeholder="询问更多信息或提出修改意见，请不要在评论里回答问题" required v-el:comment-input></textarea>
           <button type="submit" class="ui icon teal basic button right floated">
             <i class="icon edit"></i> 评论
           </button>
