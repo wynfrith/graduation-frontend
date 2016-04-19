@@ -14,7 +14,14 @@ import Comment from './comment.vue'
    },
    methods: {
      onSubmit() {
-       // 检测正则 $@(username)[space]
+       if (this.newComment.trim() == '') {
+         this.$dispatch('msg', { type: 'error', text: '写点啥吧~'});
+         this.$els.commentInput.focus();
+         return false;
+       }
+       // commit
+       this.$dispatch('msg', { type: 'ok', text: '评论成功'});
+       this.newComment = ''
      }
    },
    events: {
@@ -43,7 +50,7 @@ import Comment from './comment.vue'
 
       <form class="ui form" @submit.prevent="onSubmit">
         <div class="field">
-          <textarea rows="1" v-model="newComment" class="left floated" placeholder="询问更多信息或提出修改意见，请不要在评论里回答问题" required v-el:comment-input></textarea>
+          <textarea rows="1" v-model="newComment" class="left floated" placeholder="询问更多信息或提出修改意见，请不要在评论里回答问题" v-el:comment-input></textarea>
           <button type="submit" class="ui icon teal basic button right floated">
             <i class="icon edit"></i> 评论
           </button>

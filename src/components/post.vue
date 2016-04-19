@@ -1,10 +1,8 @@
 <script>
   import Editor from './modules/editor/editor.vue'
-  import Message from './modules/message.vue'
   export default {
     components: {
-      'editor': Editor,
-      'message': Message
+      'editor': Editor
     },
     data() {
       return {
@@ -57,7 +55,7 @@
   }
 </script>
 <template >
-  <div class="ui container ">
+  <div class="ui container">
     <message :msg.sync="msg"></message>
     <message :msg.sync="okMsg" color="orange" :delay="2500"></message>
     <div class="form-box">

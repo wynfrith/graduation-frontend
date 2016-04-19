@@ -3,7 +3,6 @@
   import Comments from './modules/comments/list.vue'
   import Editor from './modules/editor/editor.vue'
   import Qa from './modules/qa/qa.vue'
-  import Message from './modules/message.vue'
   import Recommend from './modules/sidebar/recommend.vue'
   import HotTags from './modules/sidebar/hotTags.vue'
 
@@ -14,7 +13,6 @@
       'qa': Qa,
       'comments': Comments,
       'editor': Editor,
-      'message': Message,
       'hot-tags': HotTags,
       'recommend': Recommend
     },
@@ -82,6 +80,15 @@
       'editorContent': function () {
         if (this.errorField == 'editorContent')
           this.errorField = '';
+      }
+    },
+    events: {
+      'msg': function(msg) { // type, text
+        if (msg.type == 'error') {
+          this.errorMsg = msg.text;
+        } else if (msg.type == 'ok') {
+          this.okMsg = msg.text;
+        }
       }
     }
   }
