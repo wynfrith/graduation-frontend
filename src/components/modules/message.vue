@@ -14,7 +14,8 @@
     data() {
       return {
         message: '你好',
-        show: false
+        show: false,
+        timer: ''
       }
     },
     watch: {
@@ -22,8 +23,12 @@
         if (this.msg) {
           this.message = this.msg;
           this.show = true
-          setTimeout(() => {
+          if (this.timer) {
+            clearTimeout(this.timer);
+          }
+          this.timer = setTimeout(() => {
             this.msg = ''
+            this.timer = '';
           }, this.delay)
         } else {
           this.show = false
@@ -55,6 +60,7 @@
   overflow: hidden;
   height: 42px;
   top: 0px;
+  left: 0px;
 }
 .notify .ui.message {
   height: 100%;
