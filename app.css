@@ -35,7 +35,7 @@
 
 /* 页面切换效果*/
 .fade-transition {
-  transition: opacity .2s ease;
+  transition: opacity .15s ease-in-out;
 }
 .fade-enter, .fade-leave {
   opacity: 0;

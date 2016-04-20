@@ -9,40 +9,37 @@ export default {
     'pagination': Pagination,
     'siderbar': Siderbar
   },
+  route: {
+    // waitForData: true,
+    data (trans) {
+      return Promise.all([
+        this.$http.get('http://127.0.0.1:3000/api/q/list'),
+        this.$http.get('http://127.0.0.1:3000/api/q/recommends')
+      ]).then((res) => {
+        console.log(res[1].data);
+        return {
+          items: res[0].data,
+          recommends: res[1].data
+        }
+      })
+    }
+  },
   data() {
     return {
       actived: 'new',
-      items: [{
-        id: '1',
-        title: 'react-redux异步读取数据',
-        author: 'wynfrith',
-        votes: 0,
-        answers: 1,
-        views: 2,
-        date: new Date(),
-        tags: [
-          'javascript',
-          'vue'
-        ]
-      }, {
-        id: '2',
-        title: '豌豆荚这种动态生成内容的网页，应该怎么爬取呢？',
-        author: '孔亚洲',
-        votes: 15,
-        answers: 6,
-        views: 133,
-        date: new Date(),
-        tags: [
-          'c#'
-        ]
-      }]
+      items: [],
+      recommends: []
     }
   },
   methods: {
     load(type) {
-      // 加载数据
+      let url = 'http://127.0.0.1:3000/api/q/list';
+      url = (type == 'hot') ? (url + '?sort=hot') : url;
+      this.$http.get(url).then((res) => {
+        this.items = res.data;
+      })
       this.actived = type;
-    }
+    },
   }
 }
 </script>
@@ -69,11 +66,11 @@ export default {
           <div class="ui very relaxed divided list">
             <!-- 问题列表 -->
               <question-brief v-for="item in items"
-                :id="item.id"
+                :id="item._id"
                 :title="item.title"
                 :author="item.author"
-                :votes="item.votes"
-                :answers="item.answers"
+                :votes="item.score"
+                :answers="item.answerNum"
                 :views="item.views"
                 :tags="item.tags"
                 :date="item.date"
@@ -90,7 +87,7 @@ export default {
 
       </div>
       <div class="four wide column">
-        <siderbar></siderbar>
+        <siderbar :recommends="recommends"></siderbar>
       </div>
     </div>
   </div>

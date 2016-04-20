@@ -4,6 +4,7 @@ import Comments from '../../modules/comments/list.vue'
 import HyperDown from 'hyperdown'
 import marked from 'marked'
 import hljs from 'hljs'
+
 marked.setOptions({
   highlight: function (code) {
     return hljs.highlightAuto(code).value;
@@ -23,15 +24,16 @@ export default {
     }
   },
   filters: {
-    // marked: function(value) {return new HyperDown().makeHtml(value);}
-    marked: marked
+    marked: function(value) {
+      return marked(value || '')
+    }
   }
 }
 
 </script>
 <template>
   <div class="post-item">
-    <vote :counts="data.votes"></vote>
+    <vote :counts="data.score"></vote>
     <div class="content">
       <div class="fmt" v-html="data.content | marked">
       </div>
@@ -81,7 +83,7 @@ a.ui.comment-btn {
   margin-left: 50px;
   font-size: 1.1rem;
   color: #696565;
-  padding: 5px;
+  padding: 6px;
 }
 .topic {
   margin-top: 30px;

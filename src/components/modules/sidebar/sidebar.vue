@@ -10,6 +10,9 @@ export default {
     'recommend': Recommend,
     'profile': Profile,
     'post-btn': PostBtn
+  },
+  props: {
+    recommends: Array
   }
 }
 
@@ -18,7 +21,7 @@ export default {
   <div class="ui cards">
     <profile></profile>
     <post-btn></post-btn>
-    <recommend></recommend>
+    <recommend :datas="recommends"></recommend>
     <hot-tags><hot-tags>
 
   </div>

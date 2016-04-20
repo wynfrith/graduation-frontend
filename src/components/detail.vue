@@ -16,49 +16,27 @@
       'hot-tags': HotTags,
       'recommend': Recommend
     },
+    route: {
+      data ({ to: { params: { qid }}}) {
+        return Promise.all([
+          this.$http.get('http://127.0.0.1:3000/api/q/recommends'),
+          this.$http.get(`http://127.0.0.1:3000/api/question/${qid}`)
+        ]).then((res) => {
+          return {
+            recommends: res[0].data,
+            data: res[1].data
+          }
+        })
+      }
+    },
     data() {
       return {
         errorField: '',
         editorContent: '',
         errorMsg: '',
         okMsg: '',
-
-        data: {
-          question: {
-            id: 1,
-            votes: 18,
-            title: '如何实现签到逻辑?',
-            content: "# 这是最大的字体\n## 二号标题\n### 三号标题拉克丝就\n#### 四号标题\n##### 五号标题阿狸的减肥了\n\n> 卢萨卡的就打了款家的离开家里的空间阿达刻录机大空间里卡掉了\n\n这是一段**普通**的文字, `javascript` 是一门坑爹的语言, *斜体* 是这样的 @wynfrith\n\n\n1. 这是第一条\n\t- 哈哈\n\t- 呵呵\n2. 这是第二条\n\n这是一条链接 [http://wwynfrith.me](http://wynfrith.me)\n\n下面是一张图片 \n\n![我头像](http://my-ghost.b0.upaiyun.com/cunliang.png)\n\njs端\n``` javascript\nvar app = angular.module('myApp', []);\napp.controller('myCtrl', function ($scope, $http) {\n $http.get(\"test.ask\").success(function (response) {\n $scope.myWelcome = response;\n });\n});\n```\njsp端：\n\n```html\n<body>\n\t<div ng-app=\"myApp\" ng-controller=\"myCtrl\">\n\t\t <p> 从服务器获取的信息是:</p>\n\t\t <h3>{{myWelcome}}</h3>\n\t</div>\n\t<p> $http 服务向服务器请求信息，返回的值放入变量 中</p>\n</body>\n```"
-            ,
-            comments: [{
-              author: 'Wynfrith',
-              content: '你说的对, 但是没什么卵用a',
-              date: 'Today at 5:42PM',
-              avator: 'http://my-ghost.b0.upaiyun.com/avator.jpg'
-            },{
-              author: 'Wynfrith',
-              content: '你说的对, 但是没什么卵用a',
-              date: 'Today at 5:42PM',
-              avator: 'http://my-ghost.b0.upaiyun.com/avator.jpg'
-            }]
-          },
-          answers: [{
-            id: 2,
-            votes: -3,
-            content: 'PHP的类名本身是不区分大小写的，但是一般的类加载器并不转换类名，而是直接根据类名查找对应的php代码文件。这样就造成在一些文件名称大小写敏感的操作系统下好像类名也是大小写敏感一样。而Windows的文件名是大小写不敏感的，所有本身和可以适应PHP类名大小写不敏感的加载。',
-            comments: [{
-              author: 'Wynfrith',
-              content: '你说的对, 但是没什么卵用a',
-              date: 'Today at 5:42PM',
-              avator: 'http://my-ghost.b0.upaiyun.com/avator.jpg'
-            },{
-              author: 'Wynfrith',
-              content: '你说的对, 但是没什么卵用a',
-              date: 'Today at 5:42PM',
-              avator: 'http://my-ghost.b0.upaiyun.com/avator.jpg'
-            }]
-          }]
-        }
+        recommends: [],
+        data: {}
       }
     },
     methods: {
@@ -72,7 +50,28 @@
         }
         else {
           this.errorField = ''
-          this.okMsg = '提交成功'
+          this.$http.post('http://127.0.0.1:3000/api/answer')
+            .then((res) => {
+              if (res.status == 200) {
+                let answer = {
+                  author: 'wynfrith',
+                  comments: [],
+                  views: 0,
+                  score: 0,
+                  like: [],
+                  hate:[],
+                  content: this.editorContent.trim()
+                }
+                this.data.answers.push(answer);
+                this.okMsg = '答案发布成功'
+                this.editorContent = '';
+
+              } else {
+                this.errorMsg = '发布失败, 请重新尝试'
+              }
+            })
+
+
         }
       }
     },
@@ -113,9 +112,10 @@
 
           <!-- answers -->
           <h5>{{ data.answers.length }}个回答</h5>
-          <div class="ui divider"></div>
+
 
           <template v-for="answer in data.answers">
+            <div class="ui divider"></div>
             <qa :data="answer"></qa>
           </template>
 
@@ -138,7 +138,7 @@
       </div>
       <div class="four wide column">
         <div class="ui cards">
-          <recommend></recommend>
+          <recommend :datas="recommends"></recommend>
           <hot-tags></hot-tags>
         </div>
       </div>

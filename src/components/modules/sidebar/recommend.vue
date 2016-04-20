@@ -1,12 +1,21 @@
+<script>
+  export default {
+    props: {
+      datas: Array
+    }
+  }
+</script>
 <template>
   <div class="card">
     <div class="content">
       <b><a v-link="{name: 'home'}">推荐问题</a></b>
       <div class="ui divider"></div>
       <ul>
-        <li><a href="/">这是一条推荐</a></li>
-        <li><a href="/">react-redux异步读取数据唱歌点</a></li>
-        <li><a href="/">react 排序功能</a></li>
+        <li v-for="data in datas">
+          <a v-link="{name: 'question', params: {qid: data._id}}">
+            {{ data.title }}
+          </a>
+        </li>
       </ul>
     </div>
   </div>
