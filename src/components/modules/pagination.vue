@@ -1,10 +1,33 @@
+<script>
+export default {
+  props: {
+    current: Number,
+    nums: Number,
+    url: String
+  },
+  methods: {
+    go(pageNum) {
+      let url = this.url;
+      console.log(url);
+
+      this.$http.get(url,  {page: pageNum}).then((res) => {
+        this.$dispatch('page', res.data)
+      })
+    }
+  }
+}
+</script>
 <template>
   <div class="ui pagination menu main-pagination">
-    <a class="active item">1</a>
-    <a class="item">2</a>
-    <a class="item">3</a>
-    <a class="item">4</a>
-    <a class="item icon">
+    <a class="item icon" v-if="current > 1" @click="go(current-1)">
+      <i class="left arrow icon"></i>
+    </a>
+    <a class="item icon"
+    :class="{'active': current == num+1}"
+    v-for="num in nums" @click="go(num+1)">
+      {{ num+1 }}
+    </a>
+    <a class="item icon" v-if="current < nums" @click="go(current+1)">
       <i class="right arrow icon"></i>
     </a>
   </div>

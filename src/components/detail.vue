@@ -41,16 +41,19 @@
     },
     methods: {
       onSubmit() {
-        if(this.editorContent.trim() == '') {
+        let content = this.editorContent.trim();
+        if(content == '') {
           this.errorMsg= "请输入你要回答的内容!"
           this.errorField = 'editorContent'
-        } else if (this.editorContent.trim().length < 5) {
+        } else if (content.length < 5) {
           this.errorMsg = "你的回答字数过少 (最少5字)"
           this.errorField = 'editorContent'
         }
         else {
           this.errorField = ''
-          this.$http.post('http://127.0.0.1:3000/api/answer')
+          this.$http.post('http://127.0.0.1:3000/api/answer', {
+            answer: { content: content, author: 'wynfrith'}
+          })
             .then((res) => {
               if (res.status == 200) {
                 let answer = {
@@ -60,7 +63,7 @@
                   score: 0,
                   like: [],
                   hate:[],
-                  content: this.editorContent.trim()
+                  content: content
                 }
                 this.data.answers.push(answer);
                 this.okMsg = '答案发布成功'
