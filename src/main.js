@@ -9,15 +9,16 @@ Vue.use(VueForm) // TODO: 移除
 import App from './App.vue'
 import routerMap from './router'
 
-
-import beautyDate from './filter/beautyDate.js'
+// register global store
+import Store from './store/store'
+window.store = new Store()
 
 // register global componets
-
 import Message from './components/modules/message.vue'
 Vue.component('message', Message);
 
 // register filter
+import beautyDate from './filter/beautyDate.js'
 Vue.filter('beautyDate', beautyDate);
 
 // register router

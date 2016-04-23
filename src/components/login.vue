@@ -3,13 +3,24 @@
     data() {
       return {
         myform: {},
-        model: {}
+        model: {},
+        errMsg: '',
+        okMsg: ''
       }
     },
     methods: {
       onSubmit() {
-        if(this.myform.$valid==true)
-          alert("提交成功");
+        if(this.myform.$valid==true) {
+          store.login(this.model.username, this.model.password)
+            .then(({data})=> {
+              if (data.code != 0) this.errMsg = data.msg || '出错了， 请重试'
+              else {
+                this.okMsg = '登陆成功， 正在跳转..'
+                //TODO 更新全局的的 data , 并跳转到主页
+              }
+            })
+        }
+
       },
       isError(name) {
         return this.myform[name].$dirty && this.myform[name].$invalid;
@@ -22,6 +33,8 @@
 <template>
   <div class="ui middle aligned center aligned grid">
     <div class="column">
+      <message :msg.sync="errMsg"></message>
+      <message :msg.sync="okMsg" color="orange" :delay="2500"></message>
       <h2 class="ui green image header">用户登录</h2>
       <form v-form name="myform" class="ui large form" v-on:submit.prevent="onSubmit" >
         <div class="ui stacked segment">

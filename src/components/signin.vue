@@ -3,12 +3,23 @@ export default {
   data() {
     return {
       form: {},
-      model: {}
+      model: {},
+      errMsg: '',
+      okMsg: ''
     }
   },
   methods: {
     onSubmit() {
-
+      if(this.form.$valid==true) {
+        store.register(this.model.username, this.model.email, this.model.password)
+          .then(({data})=> {
+            if (data.code != 0) this.errMsg = data.msg || '出错了， 请重试'
+            else {
+              this.okMsg = '注册成功， 正在跳转..'
+              //登陆
+            }
+          })
+      }
     },
     isError(name) {
       return this.form[name].$dirty && this.form[name].$invalid;
@@ -21,6 +32,8 @@ export default {
 <template>
   <div class="ui middle aligned center aligned grid">
     <div class="column">
+      <message :msg.sync="errMsg"></message>
+      <message :msg.sync="okMsg" color="orange" :delay="2500"></message>
       <h2 class="ui green image header">新用户注册</h2>
       <form name="form" v-form class="ui large form" @submit.prevent="onSubmit">
         <div class="ui stacked segment">
