@@ -16,6 +16,9 @@
               if (data.code != 0) this.errMsg = data.msg || '出错了， 请重试'
               else {
                 this.okMsg = '登陆成功， 正在跳转..'
+                store.doAuth(true, data.token);
+                store.fetchUser().then((res) => {
+                })
                 //TODO 更新全局的的 data , 并跳转到主页
               }
             })

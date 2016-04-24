@@ -15,4 +15,23 @@ export default class Store {
     })
   }
 
+  doAuth(isAuth, token) {
+    if(isAuth) {
+      if (token) {
+        localStorage.setItem("token", token);
+      }
+      Vue.http.options.headers['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+
+    } else {
+      localStorage.removeItem("token");
+      if(Vue.http.options.headers['Authorization']) {
+        delete Vue.http.options.headers['Authorization']
+      }
+    }
+  }
+
+  fetchUser() {
+    return Vue.http.get(`${this.domain}/api/user/wynfrith`)
+  }
+
 }

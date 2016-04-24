@@ -3,7 +3,8 @@
   export default {
     data() {
       return {
-        showDropDown: false
+        showDropDown: false,
+        msg: ''
       }
     },
     ready() {
@@ -12,6 +13,10 @@
     methods: {
       search() {
         this.$router.go({name: 'search'})
+      },
+      signout() {
+        store.doAuth(false);
+        this.msg='您已退出登录！'
       }
     }
   }
@@ -21,6 +26,7 @@
 <template>
   <div class="ui menu borderless">
     <div class="ui container">
+      <message :msg.sync="msg" color="green"></message>
       <div class="header item"><a v-link="{name: 'home'}" class="">问答社区</a></div>
       <div class="right menu">
         <div class="ui search item">
@@ -46,7 +52,7 @@
               <a v-link="{name: 'post'}" class="item">我要提问</a>
               <a v-link="{ name: 'profile', params: { username: 'wynfrith'}}" class="item">我的主页</a>
               <a v-link="{name: 'setting'}" class="item">账号设置</a>
-              <a href="#" class="item">注销</a>
+              <a class="item" @click="signout">注销</a>
             </div>
 
           </div>
