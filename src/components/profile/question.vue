@@ -1,6 +1,9 @@
 <template v-cloak>
     <h4>Wynfrith的问题</h4>
     <div class="search-list relaxed ui list">
+    <div class="blank">
+      <span>这里什么也没有..</span>
+    </div>
      <div class="item question-item" >
        <div class="content">
          <span class="views"><span>6</span> 浏览</span>

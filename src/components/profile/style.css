@@ -2,6 +2,14 @@ h4 {
   font-size: 1.4rem;
   font-weight: 400;
 }
+
+.blank span{
+  display: inline-block;
+  font-size: 1.1rem;
+  padding: 5px 15px 5px 10px;
+  color: rgba(55, 103, 146, 0.69);
+
+}
 /*问题和答案*/
 .profile-content .item.question-item .views,
 .profile-content .item.question-item .answers{

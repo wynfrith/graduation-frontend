@@ -9,9 +9,20 @@ export default {
     'question': Question,
     'answer': Answer
   },
+  route: {
+    waitForData: true,
+    data(trans) {
+      const username = trans.to.params.username;
+      return store.getUserInfos(username)
+        .then(({data}) => {
+          this.user = data;
+        })
+    }
+  },
   data() {
     return {
-      section: 'news'
+      section: 'news',
+      user: {}
     }
   },
   methods: {
@@ -32,42 +43,51 @@ export default {
             <div class="item">
 
               <div class="ui small image">
-                <img class="" src="http://my-ghost.b0.upaiyun.com/avator.jpg">
+                <img class="" :src="user.info.photoAddress">
               </div>
               <div class="content">
                 <p class="header">
-                  Wynfrith
-                  <span class="gender"><i class="man icon"></i></span>
+                  {{ user.username }}
+                  <span class="residence" v-if="user.info.residence">
+                    {{ user.info.residence }}
+                  </span>
+                  <span class="gender" v-if="user.info.gender === true">
+                    <i class="man icon" ></i>
+                  </span  >
+                  <span class="gender" v-if="user.info.gender === false">
+                    <i class="woman icon" ></i>
+                  </span  >
+
                   <a class="editor" v-link="{name: 'setting'}"><i class="edit icon"></i>编辑资料</a>
                 </p>
                 <div class="meta">
-                  <span>这个人很懒, 什么也没留下</span>
+                  <span>{{ user.info.brief }}</span>
                 </div>
                 <div class="extra">
                   <p class="infos">
-                    <span>
+                    <span v-if="user.info.birthday">
                       <i class="birthday icon"></i>
-                      <span>1994-01-25</span>
+                      <span>{{ user.info.birthday }}</span>
                     </span>
-                    <span>
+                    <span v-if="user.info.address ">
                       <i class="marker icon"></i>
-                      <span>山东省淄博市</span>
+                      <span>{{ user.info.address }}</span>
                     </span>
-                    <span>
+                    <span v-if="user.info.schoolName || user.info.institution">
                       <i class="student icon"></i>
-                      <span>山东理工大学 | 软件工程</span>
+                      <span>{{ user.info.schoolName }} | {{ user.info.institution }}</span>
                     </span>
-                    <span>
+                    <span v-if="user.info.website">
                       <i class="linkify icon"></i>
-                      <a href="http://www.wynfrith.me">http://www.wynfrith.me</a>
+                      <a href="{{ user.info.website }}">{{user.info.website}}</a>
                     </span>
-                    <span>
+                    <span v-if="user.info.phoneNumber">
                       <i class="phone icon"></i>
-                      <span>18369905318</span>
+                      <span>{{user.info.phoneNumber}}</span>
                     </span>
                   </p>
-                   <p class="introduce">
-                    <span>个人简介: 大家好, 我是王富诚, 来自美丽的淄博</span>
+                   <p class="introduce" v-if="user.info.introduce">
+                    <span>个人简介: {{user.info.introduce}}</span>
                   </p>
                 </div>
               </div>
@@ -77,7 +97,7 @@ export default {
                     <i class="heart icon"></i> 赞同
                   </div>
                   <span class="ui basic label">
-                    22
+                    {{ user.score || 0 }}
                   </span>
                 </div>
               </div>
@@ -97,13 +117,13 @@ export default {
               </div>
               <div class="ten wide column">
                 <div v-if="isCurrent('news')"  v-cloak>
-                  <news v-cloak></news>
+                  <news ></news>
                 </div>
                 <div v-if="isCurrent('answer')" v-cloak>
-                  <answer v-cloak></answer>
+                  <answer></answer>
                 </div>
                 <div v-if="isCurrent('question')" v-cloak>
-                  <question v-cloak> </question>
+                  <question></question>
                 </div>
               </div>
           </div>
@@ -164,8 +184,13 @@ export default {
   color: rgba(0, 150, 136, 0.68);
   display: inline-block;
 }
+.ui.items>.item>.content> p.header .residence{
+  font-size: .9rem;
+  vertical-align: middle;
+  color: rgba(42, 152, 78, 0.68);
+}
 .ui.items>.item>.content> p.header .gender {
-  margin-top: -2px;
+  margin-top: -1px;
 }
 .ui.items>.item>.content> p.header .editor{
   transition: all .3s ease-in-out;

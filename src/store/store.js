@@ -34,4 +34,16 @@ export default class Store {
     return Vue.http.post(`${this.domain}/api/checkLogin`, { token: token});
   }
 
+  getUserInfos(username) {
+    return Vue.http.get(`${this.domain}/api/u/${username}`)
+  }
+
+  getUserQuestions(username) {
+    return Vue.http.get(`${this.domain}/api/u/${username}/questions`)
+  }
+
+  getUserAnswers(username) {
+    return Vue.http.get(`${this.domain}/api/u/${username}/answers`)
+  }
+
 }

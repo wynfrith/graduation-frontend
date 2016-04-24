@@ -2,6 +2,9 @@
    <h4>Wynfrith的回答</h4>
 
    <div class="search-list relaxed ui list">
+   <div class="blank">
+     <span>这里什么也没有..</span>
+   </div>
     <div class="item question-item" >
       <div class="content">
         <span class="answers"><span>1</span> 回答</span>

@@ -1,16 +1,37 @@
+<script>
+export default {
+  activate(done) {
+    const username = this.$route.params.username;
+    Promise.all([
+      store.getUserQuestions(username),
+      store.getUserAnswers(username)
+    ]).then(([question, answer]) => {
+      console.log(question.data);
+      console.log(answer.data);
+      this.q = question.data;
+      this.a = answer.data;
+      done();
+    })
+  },
+  data() {
+    return {
+      q : {},
+      a : {},
+    }
+  }
+}
+
+</script>
 <template>
     <h4>最近的提问</h4>
     <div class="search-list relaxed ui list">
-     <div class="item question-item" >
+      <div class="blank" v-if="q.questions.length == 0">
+        <span>还没有发布过提问</span>
+      </div>
+     <div class="item question-item" v-for="question in q.questions">
        <div class="content">
-         <span class="views"><span>6</span> 浏览</span>
-         <a class="ui header">又拍云 options请求 401 Unauthorized</a>
-       </div>
-     </div>
-     <div class="item question-item" >
-       <div class="content">
-          <span class="views"><span>0</span> 浏览</span>
-         <a class="ui header">table里面tr到浏览器顶部距离问题？</a>
+         <span class="views"><span>{{ question.view }}</span> 浏览</span>
+         <a class="ui header">{{ question.title }}</a>
        </div>
      </div>
    </div>
@@ -18,16 +39,13 @@
    <h4>最近的回答</h4>
 
    <div class="search-list relaxed ui list">
-    <div class="item question-item" >
+     <div class="blank"  v-if="a.answers.length == 0">
+       <span>还没有发布过回答</span>
+     </div>
+    <div class="item question-item" v-for="answer in a.answers">
       <div class="content">
-        <span class="answers"><span>1</span> 回答</span>
-        <a class="ui header">在Qt中如何对QTreeWdiget上的节点和相对应的数据绑定？</a>
-      </div>
-    </div>
-    <div class="item question-item" >
-      <div class="content">
-        <span class="answers"><span>2</span> 回答</span>
-        <a class="ui header">浏览器中的敏感数据放在哪里比较安全？</a>
+        <span class="answers"><span>{{ answer.view }}</span> 回答</span>
+        <a class="ui header">{{ answer.title }}</a>
       </div>
     </div>
   </div>
