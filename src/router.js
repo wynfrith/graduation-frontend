@@ -1,4 +1,20 @@
 export default function routerMap(router) {
+  router.beforeEach((transition) => {
+    const authPages = ['post', 'setting', 'notify'];
+    console.info(localStorage.getItem('token'))
+    if (!localStorage.getItem('token')) { //TODO: 没有考虑token过期的情况， 或者说token过期后要即使清除token
+      console.log(transition.to.name);
+      for(let page of authPages) {
+        if (page == transition.to.name) {
+          let redirect = encodeURIComponent(transition.to.path);
+          transition.redirect('/login?redirect=' + redirect);
+          return;
+        }
+      }
+    }
+    transition.next();
+  })
+
   router.map({
       '/': {
         name: 'home',

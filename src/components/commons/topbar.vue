@@ -1,21 +1,22 @@
 
 <script>
   export default {
+    props: {
+      userBrief: Object
+    },
     data() {
       return {
         showDropDown: false,
         msg: ''
       }
     },
-    ready() {
-      // $('.ui.dropdown').dropdown()
-    },
     methods: {
       search() {
         this.$router.go({name: 'search'})
       },
       signout() {
-        store.doAuth(false);
+        store.setAuth(false);
+        this.$dispatch('signout');
         this.msg='您已退出登录！'
       }
     }
@@ -27,7 +28,7 @@
   <div class="ui menu borderless">
     <div class="ui container">
       <message :msg.sync="msg" color="green"></message>
-      <div class="header item"><a v-link="{name: 'home'}" class="">问答社区</a></div>
+      <div class="header item"><a href="/" class="">问答社区</a></div>
       <div class="right menu">
         <div class="ui search item">
           <div class="ui icon input">
@@ -37,27 +38,25 @@
           <div class="results"></div>
         </div>
         <!-- <a v-link="{ name: 'markdown' }" class="item">markdown</a> -->
-        <a v-link="{ name: 'signin' }" class="item">注册</a>
-        <a v-link="{ name: 'login' }" class="item">登陆</a>
-        <a class="item icon" v-link="{name: 'notify'}">
-          <i class="alarm outline icon "></i>
-          <div class="floating mini ui green empty circular label"></div>
-        </a>
-        <a class="img-item">
-          <div class="ui simple dropdown img-dropdown" >
-            <div class="text">
-            <img src="http://my-ghost.b0.upaiyun.com/avator.jpg" alt="wynfrith" class="ui image avatar"/>
+          <a v-link="{ name: 'signin' }" class="item" v-if="!userBrief.username">注册</a>
+          <a v-link="{ name: 'login' }" class="item" v-if="!userBrief.username">登陆</a>
+          <a class="item icon" v-link="{name: 'notify'}" v-if="userBrief.username">
+            <i class="alarm outline icon "></i>
+            <div class="floating mini ui green empty circular label"></div>
+          </a>
+          <a class="img-item" v-if="userBrief.username">
+            <div class="ui simple dropdown img-dropdown" >
+              <div class="text">
+              <img src="http://my-ghost.b0.upaiyun.com/avator.jpg" alt="wynfrith" class="ui image avatar"/>
+              </div>
+              <div class="menu">
+                <a v-link="{name: 'post'}" class="item">我要提问</a>
+                <a v-link="{ name: 'profile', params: { username: 'wynfrith'}}" class="item">我的主页</a>
+                <a v-link="{name: 'setting'}" class="item">账号设置</a>
+                <a class="item" @click="signout">注销</a>
+              </div>
             </div>
-            <div class="menu">
-              <a v-link="{name: 'post'}" class="item">我要提问</a>
-              <a v-link="{ name: 'profile', params: { username: 'wynfrith'}}" class="item">我的主页</a>
-              <a v-link="{name: 'setting'}" class="item">账号设置</a>
-              <a class="item" @click="signout">注销</a>
-            </div>
-
-          </div>
-
-        </a>
+          </a>
 
 
       </div>

@@ -1,21 +1,30 @@
+<script>
+export default {
+  props: {
+    user: Object
+  }
+}
+
+</script>
 <template>
   <div class="ui card profile">
     <div class="content">
       <div class="image-box">
-        <img class="ui image" src="http://my-ghost.b0.upaiyun.com/avator.jpg">
+        <img class="ui image" :src="user.info.photoAddress">
       </div>
       <div class="user-info">
         <p class="username">
-          王富诚
+          {{user.username}}
+        </p>
         <p class="brief">
-          服务端开发, 偶尔做前端
+          {{user.info.brief}}
         </p>
       </div>
     </div>
     <div class="extra content">
       <span class="left floated home">
         <i class="home icon"></i>
-        <a v-link="{name: 'profile', params: { username: 'wynfrith'}}">个人主页</a>
+        <a v-link="{name: 'profile', params: { username: user.username}}">个人主页</a>
       </span>
       <span class="right floated setting">
         <i class="setting icon"></i>

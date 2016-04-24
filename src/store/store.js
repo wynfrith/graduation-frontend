@@ -15,7 +15,7 @@ export default class Store {
     })
   }
 
-  doAuth(isAuth, token) {
+  setAuth(isAuth, token) {
     if(isAuth) {
       if (token) {
         localStorage.setItem("token", token);
@@ -30,8 +30,8 @@ export default class Store {
     }
   }
 
-  fetchUser() {
-    return Vue.http.get(`${this.domain}/api/user/wynfrith`)
+  checkLoginAndFetch(token) {
+    return Vue.http.post(`${this.domain}/api/checkLogin`, { token: token});
   }
 
 }

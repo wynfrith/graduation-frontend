@@ -10,13 +10,12 @@ export default {
     'siderbar': Siderbar
   },
   route: {
-    // waitForData: true,
+    waitForData: true,
     data (trans) {
       return Promise.all([
         this.$http.get(this.fetchUrl, { page: this.$route.query.page || 1}),
         this.$http.get('http://127.0.0.1:3000/api/q/recommends')
       ]).then((res) => {
-        console.log(res[1].data);
         return {
           items: res[0].data.questions,
           page:  res[0].data.page,
@@ -24,6 +23,9 @@ export default {
         }
       })
     }
+  },
+  props: {
+    userBrief: Object
   },
   data() {
     return {
@@ -52,6 +54,9 @@ export default {
     'page': function(datas) {
       this.items = datas.questions;
       this.page = datas.page;
+    },
+    'checkLogin': function(userBrief) {
+      this.userBrief = userBrief;
     }
   }
 }
@@ -100,7 +105,7 @@ export default {
 
       </div>
       <div class="four wide column">
-        <siderbar :recommends="recommends"></siderbar>
+        <siderbar :recommends="recommends" :user="userBrief"></siderbar>
       </div>
     </div>
   </div>
