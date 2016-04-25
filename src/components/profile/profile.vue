@@ -115,8 +115,8 @@ export default {
                   <a class="item" :class="{'active': isCurrent('answer') }" @click="section = 'answer'" >他的回答</a>
                 </div>
               </div>
-              <div class="ten wide column">
-                <div v-if="isCurrent('news')"  v-cloak>
+              <div class="ten wide column" >
+                <div v-if="isCurrent('news')"  v-cloak >
                   <news ></news>
                 </div>
                 <div v-if="isCurrent('answer')" v-cloak>

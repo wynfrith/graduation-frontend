@@ -30,7 +30,7 @@ export default {
       </div>
      <div class="item question-item" v-for="question in q.questions">
        <div class="content">
-         <span class="views"><span>{{ question.view }}</span> 浏览</span>
+         <span class="views"><span>{{ question.views }}</span> 浏览</span>
          <a class="ui header">{{ question.title }}</a>
        </div>
      </div>
