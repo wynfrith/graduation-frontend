@@ -30,6 +30,20 @@ export default class Store {
     }
   }
 
+  reSendMail() {
+    return Vue.http.post(`${this.domain}/api/user/reSend`);
+  }
+
+  getCaptchaToken() {
+    return Vue.http.get(`${this.domain}/api/genCaptchaToken`);
+  }
+
+  findPass(email, code, token) {
+    return Vue.http.post(`${this.domain}/api/findPass`,{
+      email: email, code: code, token: token
+     })
+  }
+
   checkLoginAndFetch(token) {
     return Vue.http.post(`${this.domain}/api/checkLogin`, { token: token});
   }

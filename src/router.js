@@ -1,11 +1,10 @@
 export default function routerMap(router) {
   router.beforeEach((transition) => {
     const authPages = ['post', 'setting', 'notify'];
-    console.info(localStorage.getItem('token'))
-    if (!localStorage.getItem('token')) { //TODO: 没有考虑token过期的情况， 或者说token过期后要即使清除token
-      console.log(transition.to.name);
+    if (!localStorage.getItem('token')) {
       for(let page of authPages) {
         if (page == transition.to.name) {
+          console.log(transition.to.name);
           let redirect = encodeURIComponent(transition.to.path);
           transition.redirect('/login?redirect=' + redirect);
           return;
@@ -63,6 +62,14 @@ export default function routerMap(router) {
       '/notify': {
         name: 'notify',
         component: require('./components/notify.vue')
+      },
+      '/registered': {
+        name: 'registered',
+        component: require('./components/registered.vue')
+      },
+      '/verify': {
+        name: 'verify',
+        component: require('./components/verify.vue')
       }
 
   })

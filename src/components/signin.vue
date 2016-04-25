@@ -15,12 +15,12 @@ export default {
           .then(({data})=> {
             if (data.code != 0) this.errMsg = data.msg || '出错了， 请重试'
             else {
-              this.okMsg = '注册成功， 正在跳转..'
+              this.okMsg = '注册成功!  正在跳转...'
               store.setAuth(true, data.token);
               store.checkLoginAndFetch(data.token)
                 .then(({data})=> {
                   this.$dispatch('login', data.userBrief);
-                  this.$router.go('home');
+                  this.$router.go({name: 'registered'});
                 })
             }
           })

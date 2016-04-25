@@ -3,11 +3,37 @@ export default {
   data() {
     return {
       form: {},
-      model: {}
+      model: {},
+      captchaToken: '',
+      captchaUrl: '',
+      msg: ''
     }
+  },
+  created() {
+    store.getCaptchaToken()
+      .then(({data}) => {
+        this.captchaToken = data;
+        this.captchaUrl = 'http://127.0.0.1:3000/api/captcha?r=' + data;
+      })
   },
   methods: {
     onSubmit() {
+      if(this.form.$valid) {
+        store.findPass(this.model.email, this.model.code, this.captchaToken)
+          .then(({data}) => {
+            if(data.code == 1) {
+              this.msg = data.msg || '出错了，请刷新后重新尝试';
+              store.getCaptchaToken()
+                .then(({data}) => {
+                  this.captchaToken = data;
+                  this.captchaUrl = 'http://127.0.0.1:3000/api/captcha?r=' + data;
+                })
+                
+            } else {
+              this.$router.go({name: 'registered'});
+            }
+          })
+      }
 
     },
     isError(name) {
@@ -21,6 +47,7 @@ export default {
 <template>
   <div class="ui middle aligned center aligned grid">
     <div class="column">
+      <message :msg.sync="msg"></message>
       <form v-form name="form" class="ui large form" @submit.prevent="onSubmit">
 
         <div class="ui stacked segment">
@@ -37,12 +64,18 @@ export default {
               <input type="email" v-model="model.email" name="email" v-form-ctrl required placeholder="请输入注册的邮箱" maxlength="30">
             </div>
           </div>
-          <div class="field" :class="{'error': isError('code')}">
-            <div class="ui left icon input">
-              <i class="lock icon"></i>
-              <input type="text" v-model="model.code" name="code" v-form-ctrl required placeholder="4位验证码" maxlength="4">
+          <div class="fields inline">
+            <div class="field" :class="{'error': isError('code')}">
+              <div class="ui left icon input">
+                <i class="lock icon"></i>
+                <input type="text" v-model="model.code" name="code" v-form-ctrl required placeholder="4位验证码" maxlength="4">
+              </div>
+            </div>
+            <div class="field capture">
+              <img src="{{captchaUrl}}" />
             </div>
           </div>
+
           <button type="submit" class="ui fluid green submit button">提交</button>
 
           <div class="clear"></div>
