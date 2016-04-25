@@ -52,12 +52,20 @@ export default class Store {
     return Vue.http.get(`${this.domain}/api/u/${username}`)
   }
 
+  getUserInfosByToken() {
+    return Vue.http.get(`${this.domain}/api/user/infos`);
+  }
+
   getUserQuestions(username) {
     return Vue.http.get(`${this.domain}/api/u/${username}/questions`)
   }
 
   getUserAnswers(username) {
     return Vue.http.get(`${this.domain}/api/u/${username}/answers`)
+  }
+
+  changeProfile(infos) {
+    return Vue.http.post(`${this.domain}/api/user/changeProfile`);
   }
 
 }

@@ -1,14 +1,25 @@
 <script>
 export default {
+  props: {
+    oldEmail: String
+  },
   data() {
     return {
       form: {},
-      model: {}
+      email: ''
     }
   },
   methods: {
     onSubmit() {
-
+      if(this.form.email.$error.required) {
+        console.log('...');
+        this.$dispatch('msg', false, '请输入新邮箱地址');
+      } else if(this.form.email.$invalid) {
+        this.$dispatch('msg', false, '请输入正确的邮箱地址!');
+      } else {
+        // 发送邮件
+        // 跳转到发送成功的页面
+      }
     },
     isError(name) {
       return this.form[name].$dirty && this.form[name].$invalid;
@@ -29,7 +40,7 @@ export default {
               <label>当前邮箱:</label>
             </div>
             <div class="eight wide field">
-              <b>wanfucheng56@gmail.com</b>
+              <b>{{ oldEmail }}</b>
             </div>
           </div>
           <div class="inline fields">
@@ -38,7 +49,7 @@ export default {
             </div>
             <div class="eight wide field" :class="{'error': isError('email')}">
               <input id="email" name="email" type="email" placeholder="输入新的邮箱"
-                 v-form-ctrl required v-model="model.email">
+                 v-form-ctrl required v-model="email">
             </div>
           </div>
           <div class="field">

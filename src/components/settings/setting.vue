@@ -10,17 +10,30 @@ export default {
     'email': Email,
     'pwd': Password
   },
-  ready() {
-
+  created() {
+    store.setAuth(true, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSIsImlhdCI6MTQ2MTU5MDgyOH0.kNF5yXgjSbOMdZ_lcn3ykrQHhiUXdNQeaYobkzBR3vE');
   },
   data() {
     return {
-      section: 'info'
+      section: 'info',
+      user: {},
+      errorMsg: '',
+      okMsg: ''
     }
   },
   methods: {
     isCurrent(name) {
       return this.section == name;
+    }
+  },
+  events: {
+    'fetchUser': function(user) {
+      this.user = user;
+    },
+    'msg': function(isOk, text) {
+      console.log('.....');
+      if (isOk) this.okMsg = text;
+      else this.errorMsg = text;
     }
   }
 }
@@ -29,6 +42,8 @@ export default {
 <template>
   <div class="ui container main-box">
     <div class="ui two column  grid">
+      <message :msg.sync="errorMsg"></message>
+      <message :msg.sync="okMsg" color="orange" :delay="2500"></message>
       <div class="three wide column">
         <div class="ui secondary vertical menu">
           <a class="item" :class="{'active': isCurrent('info') }" @click="section = 'info'" >
@@ -43,20 +58,16 @@ export default {
         </div>
       </div>
       <div class="twelve wide column">
-        <div v-if="isCurrent('info')" transition="fade">
-          <info ></info>
+        <div v-if="isCurrent('info')"  transition="fade">
+          <info></info>
         </div>
         <div v-if="isCurrent('email')" transition="fade">
-          <email></email>
+          <email :old-email="user.email"></email>
         </div>
         <div v-if="isCurrent('password')" transition="fade">
           <pwd> </pwd>
         </div>
       </div>
-
-          <!-- <info  v-if="section == 'info'" transition="fade"  ></info>
-          <email v-if="section == 'email'" transition="fade" transition-mode="out-in"  ></email>
-          <pwd  v-if="section == 'password'" transition="fade" transition-mode="out-in" ></pwd> -->
 
     </div>
   </div>

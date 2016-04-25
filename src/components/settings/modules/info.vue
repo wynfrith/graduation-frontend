@@ -2,6 +2,9 @@
 import CropModal from '../../modules/modal.vue'
 
 export default {
+  props: {
+    user: Object
+  },
   components: {
     'cropper': CropModal,
   },
@@ -10,21 +13,34 @@ export default {
       avatarUrl: '',
       showCrop: false,
       model: {
-        photoAddress: 'http://my-ghost.b0.upaiyun.com/avator.jpg',
-        brief: '服务端开发',
-        phoneNumber: '18369905318',
-        birthday: '1994-01-25',
-        schoolName: '山东理工大学',
-        institution: '软件工程',
-        gender: '男',
-        residence: '淄博',
-        website: 'https://github.com/wynfrith',
-        address: '山东省淄博市淄川区',
-        introduce: '大家好, 我是王富诚, 来自美丽的淄博'
+        // photoAddress: 'http://my-ghost.b0.upaiyun.com/avator.jpg',
+        // brief: '服务端开发',
+        // phoneNumber: '18369905318',
+        // birthday: '1994-01-25',
+        // schoolName: '山东理工大学',
+        // institution: '软件工程',
+        // gender: '男',
+        // residence: '淄博',
+        // website: 'https://github.com/wynfrith',
+        // address: '山东省淄博市淄川区',
+        // introduce: '大家好, 我是王富诚, 来自美丽的淄博'
       }
     }
   },
+  activate(done) {
+    store.getUserInfosByToken()
+      .then(({status, data}) => {
+        if (this.status == 401) {
+          this.$router.go({name: 'home'})
+        } else {
+          this.model = data.info;
+          this.$dispatch('fetchUser', data);
+          done()
+        }
+      })
+  },
   ready() {
+    // 初始化model
     $('#imgBox .dimmable.image').dimmer({
       on: 'hover'
     });
@@ -73,7 +89,7 @@ export default {
         <!-- TODO: 修改头像 -->
         <div class="field">
           <label>一句话描述: </label>
-          <input v-model="model.brief" type="text" placeholder="不超过20字" maxlength="20">
+          <input v-model="model.brief" type="text" placeholder="不超过20字" maxlength="20" value="{{user.info.brief}}">
         </div>
 
         <div class="field">
