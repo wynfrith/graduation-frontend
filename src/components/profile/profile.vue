@@ -97,7 +97,7 @@ export default {
                     <i class="heart icon"></i> 赞同
                   </div>
                   <span class="ui basic label">
-                    {{ user.score || 0 }}
+                    {{ user.scores || 0 }}
                   </span>
                 </div>
               </div>

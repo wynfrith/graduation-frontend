@@ -41,8 +41,8 @@ export default {
         <span>发布于5天前</span>
         <a class="ui comment-btn" @click="isShow = !isShow">评论</a>
         <div class="post-author">
-          <img src="http://my-ghost.b0.upaiyun.com/avator.jpg" alt="" class="ui avatar image"/>
-          <span><a v-link="{name: 'profile', params: { username: 'wynfrith'}}">wynfrith</a></span>
+          <img :src="data.authorAvatar" alt="" class="ui avatar image"/>
+          <span><a v-link="{name: 'profile', params: { username: data.author }}">{{ data.author }}</a></span>
         </div>
       </div>
       <div class="comments-box" >
