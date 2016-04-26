@@ -159,7 +159,7 @@ export default {
           <div class="ui calendar" id="calendar">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input v-el:birth v-model="model.birthday" type="text" placeholder="出生年月" @change="chooseBirth" >
+              <input v-el:birth :value="model.birthday | dateFormat 'yyyy-MM-dd'" type="text" placeholder="出生年月" @change="chooseBirth" >
             </div>
           </div>
         </div>

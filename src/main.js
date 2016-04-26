@@ -19,7 +19,9 @@ Vue.component('message', Message);
 
 // register filter
 import beautyDate from './filter/beautyDate.js'
+import dateFormat from './filter/dateFormat.js'
 Vue.filter('beautyDate', beautyDate);
+Vue.filter('dateFormat', dateFormat);
 
 // register router
 const router = new VueRouter()
