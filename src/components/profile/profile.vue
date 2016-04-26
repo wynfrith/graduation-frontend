@@ -67,7 +67,7 @@ export default {
                   <p class="infos">
                     <span v-if="user.info.birthday">
                       <i class="birthday icon"></i>
-                      <span>{{ user.info.birthday }}</span>
+                      <span>{{ user.info.birthday | dateFormat 'yyyy-MM-dd' }}</span>
                     </span>
                     <span v-if="user.info.address ">
                       <i class="marker icon"></i>
