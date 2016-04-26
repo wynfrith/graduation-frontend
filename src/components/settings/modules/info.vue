@@ -41,6 +41,7 @@ export default {
   },
   ready() {
     // 初始化model
+    console.log('ready');
     $('#imgBox .dimmable.image').dimmer({
       on: 'hover'
     });
@@ -67,6 +68,9 @@ export default {
   },
 
   methods: {
+    initJqueryComponets(){
+
+    },
     changeProfile() {
       this.model.birthday = this.$els.birth.value;
       console.log(this.model.birthday);
@@ -78,6 +82,7 @@ export default {
             return;
           }
           if (data.code == 0) {
+            this.$dispatch('changeBrief', this.model.brief);
             this.$dispatch('msg', true, '修改个人资料成功！');
           } else {
             this.$dispatch('msg', false, '修改失败， 请重试！')
@@ -132,7 +137,10 @@ export default {
         .then(({ status, data}) => {
           if (status == 401) this.$dispatch('msg', false, '请先登录');
           else {
-            if (data.code != 0 ) this.$dispatch('msg', false, data.msg);
+            if (data.code != 0 ) {
+              this.$dispatch('msg', false, data.msg);
+              this.$broadcast('uploadFinshed');
+            }
             else {
               this.$dispatch('msg', true, '上传中..');
               this.upload(data.policy, data.signature);

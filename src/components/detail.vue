@@ -51,8 +51,9 @@
         }
         else {
           this.errorField = ''
-          this.$http.post('http://127.0.0.1:3000/api/answer', {
-            answer: { content: content, author: 'wynfrith'}
+          this.$http.post('http://127.0.0.1:3000/api/user/answer', {
+            answer: { content: content },
+            qid: this.$route.params.qid
           })
             .then((res) => {
               if (res.status == 200) {

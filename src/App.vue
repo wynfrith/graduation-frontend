@@ -25,6 +25,9 @@
         })
     },
     events: {
+      'changeBrief': function (text) {
+        this.userBrief.info.brief = text;
+      },
       'changeAvatar': function(url) {
         this.userBrief.info.photoAddress = url;
       },

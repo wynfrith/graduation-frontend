@@ -57,13 +57,13 @@ export default {
         </div>
       </div>
       <div class="twelve wide column">
-        <div v-if="isCurrent('info')"  transition="fade">
+        <div v-show="isCurrent('info')"  transition="fade">
           <info></info>
         </div>
-        <div v-if="isCurrent('email')" transition="fade">
+        <div v-show="isCurrent('email')" transition="fade">
           <email :old-email="user.email"></email>
         </div>
-        <div v-if="isCurrent('password')" transition="fade">
+        <div v-show="isCurrent('password')" transition="fade">
           <pwd> </pwd>
         </div>
       </div>
