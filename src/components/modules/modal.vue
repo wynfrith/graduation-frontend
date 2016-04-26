@@ -3,7 +3,8 @@
     data() {
       return {
         jcropApi: '',
-        imgOpts: ''
+        imgOpts: {},
+        isUploading: false
       }
     },
     props: {
@@ -18,10 +19,31 @@
       updateCoords(c) {
         this.imgOpts = c;
       },
+      cancel() {
+        this.show = false;
+        this.isUploading =false;
+      },
       upload() {
         // upload img and opts
-        console.log(this.img);
-        console.log(this.imgOpts);
+        this.isUploading = true;
+        var realImg = new Image();
+        realImg.src = this.$els.uploadImg.src;
+        var realX = Math.round(this.imgOpts.x * (realImg.width / 300));
+        var realY = Math.round(this.imgOpts.y * (realImg.height / 300));
+        var realW = Math.round(this.imgOpts.w * (realImg.width / 300));
+        var realH = Math.round(this.imgOpts.h * (realImg.width / 300));
+        this.$dispatch('crop', {
+          width: realW,
+          height: realH,
+          x: realX,
+          y: realY
+        });
+        //已经缩放后的宽高
+      }
+    },
+    events: {
+      'uploadFinshed': function () {
+        this.isUploading = false;
       }
     },
     watch: {
@@ -59,11 +81,11 @@
           <h2>上传图片</h2>
         </div>
         <div class="modal-body">
-          <img id="avatar" v-bind:src="img" height="300"/>
+          <img id="avatar" v-bind:src="img" height="300" v-el:upload-img/>
         </div>
         <div class="modal-footer">
-          <button class="ui right floated button" name="button" @click="show = false">取消</button>
-          <button class="ui right floated green button" name="button" @click="upload">上传</button>
+          <button class="ui right floated button" name="button" @click="cancel">取消</button>
+          <button class="ui right floated green button" :class="{'disabled': isUploading }" name="button" @click="upload">上传</button>
           <div class="clear"></div>
         </div>
       </div>
@@ -83,7 +105,7 @@
   height: 100%;
   /*background: rgba(0, 0, 0, 0.7);*/
   background-color: rgba(0,0,0,.6);
-  z-index: 10000;
+  z-index: 1000;
   display: table;
   transition: opacity .3s ease;
   }

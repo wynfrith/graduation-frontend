@@ -16,6 +16,7 @@
       // 如果已经登陆， 取出 userBrief 并向下boradcast事件
       const token = localStorage.getItem('token')
       if (!token) return;
+      store.setAuth(token);
       store.checkLoginAndFetch(token)
         .then(({data}) => {
           if(data.code == 0) {
@@ -24,6 +25,9 @@
         })
     },
     events: {
+      'changeAvatar': function(url) {
+        this.userBrief.info.photoAddress = url;
+      },
       'login': function(data) {
         this.userBrief = data;
       },

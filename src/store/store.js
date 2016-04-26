@@ -68,4 +68,36 @@ export default class Store {
     return Vue.http.post(`${this.domain}/api/user/changeProfile`);
   }
 
+  preAvatarUpload(infos) {
+    return Vue.http.post(`${this.domain}/api/user/avatarPreUpload`, {
+      x: infos.x, y: infos.y, width: infos.width, height: infos.height
+    })
+  }
+
+  uploadToUpYun(formData) {
+    return new Promise(function (resolve, reject){
+      try {
+        const xhr = new XMLHttpRequest();
+        xhr.open('post','http://v0.api.upyun.com/graduation');
+        xhr.send(formData);
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4) {
+            if (xhr.status >= 200 && xhr.status <= 300) {
+              resolve(xhr.responseText)
+            } else {
+              resolve(xhr.responseText)
+            }
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        reject(err);
+      }
+    }).then(JSON.parse)
+  }
+
+  saveAvatar(url) {
+    return Vue.http.post(`${this.domain}/api/user/avatarUpload`, { url: url })
+  }
+
 }

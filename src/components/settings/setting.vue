@@ -11,7 +11,7 @@ export default {
     'pwd': Password
   },
   created() {
-    store.setAuth(true, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSIsImlhdCI6MTQ2MTU5MDgyOH0.kNF5yXgjSbOMdZ_lcn3ykrQHhiUXdNQeaYobkzBR3vE');
+    // store.setAuth(true, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMSIsImlhdCI6MTQ2MTU5MDgyOH0.kNF5yXgjSbOMdZ_lcn3ykrQHhiUXdNQeaYobkzBR3vE');
   },
   data() {
     return {
@@ -31,7 +31,6 @@ export default {
       this.user = user;
     },
     'msg': function(isOk, text) {
-      console.log('.....');
       if (isOk) this.okMsg = text;
       else this.errorMsg = text;
     }

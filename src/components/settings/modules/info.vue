@@ -1,12 +1,12 @@
 <script>
-import CropModal from '../../modules/modal.vue'
+import Modal from '../../modules/modal.vue'
 
 export default {
   props: {
     user: Object
   },
   components: {
-    'cropper': CropModal,
+    'modal': Modal,
   },
   data() {
     return {
@@ -65,7 +65,7 @@ export default {
   },
 
   methods: {
-    upload(event) {
+    cropImg(event) {
       const files = event.target.files;
       const reader = new FileReader()
       reader.onload = (e) => {
@@ -75,8 +75,51 @@ export default {
       }
       reader.readAsDataURL(files[0]);
     },
+    upload(policy, signature) {
+      // 获取文件paload并上传到又拍
+      const formData = new FormData();
+      formData.append('file', this.$els.fileInput.files[0])
+      formData.append('signature', signature);
+      formData.append('policy', policy);
+
+      store.uploadToUpYun(formData)
+        .then((data) => {
+          this.$broadcast('uploadFinshed');// 给模态框一个完成的响应
+          if (data.code == 200) {
+            const url = `http://graduation.b0.upaiyun.com/${data.url}`;
+            store.saveAvatar(url)
+             .then(({status, data})=> {
+               if (status == 401 || data.code == 1) this.$dispatch('msg', false, '保存头像失败， 请重试')
+               this.$dispatch('msg', true, '头像上传成功！');
+               this.showCrop = false;
+               this.model.photoAddress = url;
+               this.$dispatch('changeAvatar', this.model.photoAddress); // 通知给App
+             })
+
+          } else if (data.code == 401) {
+            this.$dispatch('msg', false, '上传失败！请刷新重试');
+          } else {
+            this.$dispatch('msg', false, '头像上传失败');
+          }
+        })
+    },
     clear(){
       $('#img').val('')
+    }
+  },
+  events: {
+    'crop': function (infos) {
+      store.preAvatarUpload(infos)
+        .then(({ status, data}) => {
+          if (status == 401) this.$dispatch('msg', false, '请先登录');
+          else {
+            if (data.code != 0 ) this.$dispatch('msg', false, data.msg);
+            else {
+              this.$dispatch('msg', true, '上传中..');
+              this.upload(data.policy, data.signature);
+            }
+          }
+        })
     }
   }
 }
@@ -169,7 +212,7 @@ export default {
           <div class="ui inverted dimmer">
             <div class="content">
               <div class="center">
-                <input id="img" type="file" @change="upload" @click="clear" style="display:none">
+                <input v-el:file-input id="img" type="file" @change="cropImg" @click="clear" style="display:none">
                 <label for="img" class="ui green inverted button">修改头像</label>
               </div>
             </div>
@@ -177,7 +220,7 @@ export default {
           <img class="ui image" :src="model.photoAddress">
         </div>
       </div>
-      <cropper :show.sync="showCrop" :img="avatarUrl"><cropper>
+      <modal :show.sync="showCrop" :img="avatarUrl"></modal>
     </div>
 
   </div>
