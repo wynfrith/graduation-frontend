@@ -151,20 +151,13 @@ export default {
           <div class="inline fields">
             <div class="field">
               <div class="ui radio checkbox">
-                <input id="noGender" type="radio" name="gender"
-                :checked="model.gender!='男'&& model.gender!='女'" tabindex="0" class="hidden">
-                <label for="noGender">保密</label>
-              </div>
-            </div>
-            <div class="field">
-              <div class="ui radio checkbox">
-                <input id="man" type="radio" name="gender" :checked="model.gender=='男'" tabindex="0" class="hidden">
+                <input id="man" type="radio" name="gender" :checked="model.gender===true" tabindex="0" class="hidden" value="true" v-model="gender">
                 <label for="man">男</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input id="woman" type="radio" name="gender" :checked="model.gender=='女'" tabindex="0" class="hidden">
+                <input id="woman" type="radio" name="gender" :checked="model.gender===false" tabindex="0" class="hidden" value="false" v-model="gender">
                 <label for="woman">女</label>
               </div>
             </div>
