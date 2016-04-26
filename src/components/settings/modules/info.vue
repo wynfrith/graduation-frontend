@@ -55,9 +55,11 @@ export default {
       formatter: {
         date: function (date, settings) {
           if (!date) return '';
-          var day = date.getDate();
-          var month =date.getMonth() + 1;
+          var day = date.getDate().toString();
+          var month = (date.getMonth() + 1).toString();
           var year = date.getFullYear();
+          day = day.length == 1 ? '0'+day : day;
+          month = month.length == 1 ? '0'+month : month
           return `${year}-${month}-${day}`;
         }
       }
