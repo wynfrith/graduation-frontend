@@ -104,4 +104,8 @@ export default class Store {
     return Vue.http.post(`${this.domain}/api/user/changeProfile`, model);
   }
 
+  changePass(model) {
+    return Vue.http.post(`${this.domain}/api/user/changePass`, model);
+  }
+
 }

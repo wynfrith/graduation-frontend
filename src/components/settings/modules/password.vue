@@ -3,12 +3,41 @@ export default {
   data() {
     return {
       form: {},
-      model: {}
+      model: {},
+      vueForm: {}
     }
   },
   methods: {
     onSubmit() {
-
+      if(this.form.$invalid) {
+        if (this.form.oldPassword.$error.required) {
+          this.$dispatch('msg', false, '请填写您的原密码')
+        } else if (this.form.newPassword.$error.required) {
+          this.$dispatch('msg', false, '请填写新密码')
+        } else if (this.form.newPassword.$error.minlength) {
+          this.$dispatch('msg', false, '新密码长度要大于六位')
+        } else if (this.form.rePassword.$error.required) {
+          this.$dispatch('msg', false, '请填填写确认密码')
+        } else if (this.model.newPassword != this.model.rePassword) {
+          this.$dispatch('msg', false, '两次密码不一致')
+        } else {
+          this.$dispatch('msg', false, '请检查表单')
+        }
+      } else {
+        store.changePass(this.model)
+          .then(({status, data}) => {
+            if (status == 401) {
+              this.$dispatch('msg', false, '请先登录')
+              setTimeout(()=> {this.$router.go({name:'login'})}, 800)
+            } else {
+              if (data.code == 0) {
+                this.$dispatch('msg', true, '密码修改成功')
+              } else {
+                this.$dispatch('msg', false, data.msg)
+              }
+            }
+          })
+      }
     },
     isError(name) {
       return this.form[name].$dirty && this.form[name].$invalid;
@@ -24,14 +53,14 @@ export default {
         <div class="ui divider">
 
         </div>
-        <form v-form name="form" class="ui form">
+        <form v-form name="form" class="ui form" @submit.prevent="onSubmit" >
           <div class="inline fields">
             <div class="two wide field">
               <label>当前密码:</label>
             </div>
             <div class="eight wide field" :class="{'error': isError('oldPassword')}">
               <input type="password" placeholder="当前密码" name="oldPassword"
-               v-model="model.oldPassworld" v-form-ctrl required maxlength="30">
+               v-model="model.oldPassword" v-form-ctrl required maxlength="30">
             </div>
           </div>
           <div class="inline fields">
@@ -53,7 +82,7 @@ export default {
             </div>
           </div>
           <div class="field">
-            <button type="button" class="ui green button">修改密码</button>
+            <button type="submit" class="ui green button">修改密码</button>
           </div>
 
         </form>
