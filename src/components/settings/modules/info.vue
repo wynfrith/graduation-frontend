@@ -67,6 +67,23 @@ export default {
   },
 
   methods: {
+    changeProfile() {
+      this.model.birthday = this.$els.birth.value;
+      console.log(this.model.birthday);
+      store.changeProfile(this.model)
+        .then(({status, data}) => {
+          if (status == 401) {
+            this.$dispatch('msg', false, '请先登录！');
+            setTimeout(()=> {this.$router.go({name: 'login'})}, 800);
+            return;
+          }
+          if (data.code == 0) {
+            this.$dispatch('msg', true, '修改个人资料成功！');
+          } else {
+            this.$dispatch('msg', false, '修改失败， 请重试！')
+          }
+        })
+    },
     cropImg(event) {
       const files = event.target.files;
       const reader = new FileReader()
@@ -142,7 +159,7 @@ export default {
           <div class="ui calendar" id="calendar">
             <div class="ui input left icon">
               <i class="calendar icon"></i>
-              <input v-model="model.birthday" type="text" placeholder="出生年月" >
+              <input v-el:birth v-model="model.birthday" type="text" placeholder="出生年月" @change="chooseBirth" >
             </div>
           </div>
         </div>
@@ -151,13 +168,13 @@ export default {
           <div class="inline fields">
             <div class="field">
               <div class="ui radio checkbox">
-                <input id="man" type="radio" name="gender" :checked="model.gender===true" tabindex="0" class="hidden" value="true" v-model="gender">
+                <input id="man" type="radio" name="gender" :checked="model.gender===true" tabindex="0" class="hidden" value="true" @click="model.gender=true">
                 <label for="man">男</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input id="woman" type="radio" name="gender" :checked="model.gender===false" tabindex="0" class="hidden" value="false" v-model="gender">
+                <input id="woman" type="radio" name="gender" :checked="model.gender===false" tabindex="0" class="hidden" value="false" @click="model.gender=false">
                 <label for="woman">女</label>
               </div>
             </div>
@@ -195,7 +212,7 @@ export default {
           <textarea v-model="model.introduce" rows="4" placeholder="不超过200字"></textarea>
         </div>
 
-        <button class="ui green button right floated" type="submit">修改资料</button>
+        <button class="ui green button right floated" type="submit" @click="changeProfile">修改资料</button>
 
       </div>
     </div>

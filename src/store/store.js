@@ -100,4 +100,8 @@ export default class Store {
     return Vue.http.post(`${this.domain}/api/user/avatarUpload`, { url: url })
   }
 
+  changeProfile(model) {
+    return Vue.http.post(`${this.domain}/api/user/changeProfile`, model);
+  }
+
 }
