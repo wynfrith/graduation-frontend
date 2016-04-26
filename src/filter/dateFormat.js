@@ -1,6 +1,6 @@
 export default function(date, format) {
+  if (!date) return undefined;
   date = new Date(date);
-
   var map = {
     "M": date.getMonth() + 1, //月份
     "d": date.getDate(), //日
