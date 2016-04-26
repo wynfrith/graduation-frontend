@@ -52,7 +52,7 @@
 .notify {
   // display: none;
   position: fixed;
-  width: 100%;
+  max-width: 600px;
   z-index: 9999;
   text-align: center;
   -webkit-transition: all linear .25s;
@@ -61,6 +61,8 @@
   height: 42px;
   top: 0px;
   left: 0px;
+  right: 0px;
+  margin: 0 auto;
 }
 .notify .ui.message {
   height: 100%;
