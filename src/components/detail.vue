@@ -56,6 +56,7 @@
             qid: this.$route.params.qid
           })
             .then((res) => {
+              console.log(res);
               if (res.status == 200) {
                 const currentUser = this.$root.$get('userBrief');
 

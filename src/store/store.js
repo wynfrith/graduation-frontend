@@ -120,4 +120,8 @@ export default class Store {
     });
   }
 
+  getTags() {
+    return Vue.http.get(`${this.domain}/api/tags`)
+  }
+
 }
