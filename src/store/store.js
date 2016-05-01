@@ -120,6 +120,14 @@ export default class Store {
     });
   }
 
+  postQuestion(title, content, tagStr) {
+    return Vue.http.post(`${this.domain}/api/user/question`, {
+      content: content,
+      title: title,
+      tagStr: tagStr
+    });
+  }
+
   getTags() {
     return Vue.http.get(`${this.domain}/api/tags`)
   }

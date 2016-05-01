@@ -65,8 +65,23 @@
           this.msg = "你的内容太少了吧! (15字以上)"
           this.errorField = 'content'
         } else {
-          this.okMsg = '问题发布成功, 正在跳转..';
-          this.errorField = ''
+          store.postQuestion(this.model.title, this.model.content, this.tagsText)
+            .then(({status, data}) => {
+              if (status == 401) {
+                this.msg = "请先登录"
+                return false
+              } else {
+                if (data.code == 0) {
+                  this.okMsg = '问题发布成功, 正在跳转..';
+                  setTimeout(() => {
+                    this.$router.go({name:'question', params: {qid: data.data._id}})
+                  }, 1000);
+                } else {
+                  this.msg = data.msg;
+                }
+              }
+            })
+
         }
       },
       isError(name) {
