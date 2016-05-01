@@ -5,55 +5,79 @@
       'pagination': Pagination
     },
     methods: {
+      doSearch() {
+        this.search.page = 1;
+        store.doSearch(this.search)
+          .then(({data}) => {
+            this.count = data.page.count;
+            this.users = this.questions = this.tags = [];
+            this[this.search.type+'s'] = data.result;
+          })
+      },
       changeSearchType(type) {
+        this.search.page = 1;
         this.search.type = type;
+        this.count = 0;
+        store.doSearch(this.search)
+          .then(({data}) => {
+            this.count = data.page.count;
+            this.users = this.questions = this.tags = [];
+            this[type+'s'] = data.result;
+          })
         // 进行一次搜索
+      },
+      loadMore() {
+        // 首先判断个数和总个数是否相等
+        // 创建一个search对象， 并使page+1
+        // const search = Object.assign({}, this.search);
+        const search = this.search;
+        search.page += 1;
+        store.doSearch(search)
+          .then(({data}) => {
+            this.count = data.page.count;
+            data.result.forEach((item) => {
+              this[this.search.type+'s'].push(item);
+            })
+          })
+      },
+      showLoadMore() {
+        console.log(this.count);
+        let length = this[this.search.type+'s'].length;
+        console.log(length);
+        return this.count > length;
+      }
+    },
+    filters: {
+      'limit': function(str, length) {
+        return str.substring(0, length) + '...'
+      }
+    },
+    route: {
+      waitForData: true,
+      data(trans) {
+        this.search.text = trans.to.query.text;
+        return store.doSearch(this.search)
+            .then(({data}) => {
+              this.count = data.page.count;
+              this.questions = data.result;
+            })
       }
     },
     data() {
       return {
+        count: 0,
         search: {
           type: 'question',
-          text: ''
+          text: '',
+          page: 1,
+          limit: 15
         },
-        questions: [{
-          id: 1,
-          title: 'Linux夏令时是怎么调整的？',
-          content: '以法国巴黎为例： {代码...} 从dump的信息可以看出，当巴黎时间...'
-        },{
-          id: 2,
-          title: '我想要背景长度变化，而文字不移动，要怎么修改呢',
-          content: '{代码...} 我想要背景长度变化，而文字不移动，要怎么修改呢'
-        }],
-        users: [{
-          id: 1,
-          username: 'wynfrith',
-          avator: 'https://octodex.github.com/images/octoliberty.png',
-          introduce: '你好, 我是wynfrith'
-        },
-        {
-          id: 2,
-          username: '孔亚洲',
-          avator: 'https://octodex.github.com/images/mummytocat.gif',
-          introduce: '专注Csharp100年'
-        }],
+        questions: [],
+        users: [
+
+        ],
         tags: [
-          {
-            id: 1,
-            name: 'javascript',
-            memo: 'JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型',
-            selected: false
-          },
-          {
-            id: 2,
-            name: 'go',
-            memo:'Go语言专门针对多处理器系统应用程序的编程进行了优化，使用Go编译的程序可以媲美C或C++代码的速度，而且更加安全、支持并行进程'
-          },
-          {
-            id: 3,
-            name: 'python',
-            memo: 'Python, 是一种面向对象、解释型计算机程序设计语言'
-          }
+
         ]
       }
     }
@@ -78,7 +102,7 @@
                   <input type="text" placeholder="搜索你想要的" v-model="search.text">
               </div>
               <div class="three wide field">
-                <button class="ui blue green fluid button">搜索</button>
+                <button class="ui blue green fluid button" @click="doSearch">搜索</button>
               </div>
             </div>
           </form>
@@ -91,9 +115,9 @@
            <div class="search-list relaxed ui list">
             <div class="item question-item" v-for="question in questions">
               <div class="content">
-                <a v-link="'/q/' + question.id" class="header">{{ question.title }}</a>
+                <a v-link="'/q/' + question._id" class="header">{{ question.title }}</a>
                 <p class="description">
-                  {{ question.content }}
+                  {{ question.content | limit 80 }}
                 </p>
               </div>
             </div>
@@ -102,9 +126,9 @@
             <!-- 用户 -->
           <div class="search-list large relaxed middle aligned ui list">
             <div class="item user-item" v-for="user in users">
-              <img class="ui avatar image" :src="user.avator">
+              <img class="ui avatar image" :src="user.info.photoAddress">
               <div class="content">
-                <a v-link="'/u/' + user.id" class="header">{{ user.username }}</a>
+                <a v-link="'/u/' + user.username" class="header">{{ user.username }}</a>
                 <p class="description">
                   {{ user.introduce }}
                 </p>
@@ -128,9 +152,10 @@
 
 
 
-        <!-- <div class="ui center aligned container"> -->
-          <pagination></pagination>
-        <!-- </div> -->
+        <div class="ui center aligned container" v-if="showLoadMore()" v-cloak >
+          <button class="ui tiny button" @click="loadMore"> 加载更多</button>
+          <!-- <pagination></pagination> -->
+         </div>
 
         </div>
       </div>

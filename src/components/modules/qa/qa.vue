@@ -27,6 +27,12 @@ export default {
     marked: function(value) {
       return marked(value || '')
     }
+  },
+  events: {
+    'addComment': function(comment) {
+      this.data.comments.push(comment);
+      console.log(this.data);
+    }
   }
 }
 
@@ -39,14 +45,14 @@ export default {
       </div>
       <div class="topic">
         <span>发布于5天前</span>
-        <a class="ui comment-btn" @click="isShow = !isShow">评论</a>
+        <a class="ui comment-btn" @click="isShow = !isShow">评论 {{ data.comments.length == 0 ? '': data.comments.length }}</a>
         <div class="post-author">
+          <span><a v-link="{name: 'profile', params: { username: data.author }}">{{ data.author }}</a></span>&nbsp;&nbsp;
           <img :src="data.authorAvatar" alt="" class="ui avatar image"/>
-          <span><a v-link="{name: 'profile', params: { username: data.author }}">{{ data.author }}</a></span>
         </div>
       </div>
       <div class="comments-box" >
-        <comments :datas="data.comments" v-show="isShow"></comments>
+        <comments :datas="data.comments" :id="data._id" v-show="isShow"></comments>
       </div>
     </div>
   </div>

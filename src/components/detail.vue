@@ -57,8 +57,11 @@
           })
             .then((res) => {
               if (res.status == 200) {
+                const currentUser = this.$root.$get('userBrief');
+
                 let answer = {
-                  author: 'wynfrith',
+                  author: currentUser.username,
+                  authorAvatar: currentUser.info.photoAddress,
                   comments: [],
                   views: 0,
                   score: 0,

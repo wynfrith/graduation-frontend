@@ -108,4 +108,16 @@ export default class Store {
     return Vue.http.post(`${this.domain}/api/user/changePass`, model);
   }
 
+  doSearch(search) {
+    // const datas = { text: text, type: type, page: page, limit: limit}
+    return Vue.http.get(`${this.domain}/api/search`, search);
+  }
+
+  postComment(content, qaId) {
+    return Vue.http.post(`${this.domain}/api/user/reply`, {
+      content: content,
+      id: qaId
+    });
+  }
+
 }

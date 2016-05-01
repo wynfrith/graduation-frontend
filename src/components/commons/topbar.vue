@@ -7,12 +7,13 @@
     data() {
       return {
         showDropDown: false,
-        msg: ''
+        msg: '',
+        searchText: '',
       }
     },
     methods: {
       search() {
-        this.$router.go({name: 'search'})
+        this.$router.go({name: 'search', query:{text: this.searchText}})
       },
       signout() {
         store.setAuth(false);
@@ -33,7 +34,7 @@
       <div class="right menu">
         <div class="ui search item">
           <div class="ui icon input">
-            <input class="prompt" type="text" placeholder="搜索问题或标签">
+            <input class="prompt" type="text" placeholder="搜索问题或标签" v-model="searchText">
             <i class="search icon link" @click="search"></i>
           </div>
           <div class="results"></div>

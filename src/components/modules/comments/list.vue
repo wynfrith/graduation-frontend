@@ -5,7 +5,8 @@ import Comment from './comment.vue'
      'comment': Comment
    },
    props: {
-     datas: Array
+     datas: Array,
+     id: String,
    },
    data() {
      return {
@@ -14,14 +15,37 @@ import Comment from './comment.vue'
    },
    methods: {
      onSubmit() {
+       console.info(this.$root.$get('userBrief').username);
        if (this.newComment.trim() == '') {
          this.$dispatch('msg', { type: 'error', text: '写点啥吧~'});
          this.$els.commentInput.focus();
          return false;
        }
        // commit
-       this.$dispatch('msg', { type: 'ok', text: '评论成功'});
-       this.newComment = ''
+       store.postComment(this.newComment, this.id)
+        .then(({status, data}) => {
+          if (status == 401) {
+            this.$dispatch('msg', { type: 'error', text: '请先登录'});
+          } else {
+            if (data.code == 0)  {
+              this.$dispatch('msg', { type: 'ok', text: '评论成功'});
+              //发消息给当前QA
+              const currentUser = this.$root.$get('userBrief');
+              this.$dispatch('addComment', {
+                authorAvatar: currentUser.info.photoAddress,
+                author: currentUser.username,
+                content: this.newComment
+              })
+              
+              this.newComment = '';
+
+            }
+            else {
+              this.$dispatch('msg', { type: 'ok', text: data.msg});
+            }
+          }
+        })
+
      }
    },
    events: {
@@ -40,7 +64,7 @@ import Comment from './comment.vue'
       <div>
         <template v-for="data in datas">
           <comment
-            :avatar="data.avator"
+            :avatar="data.authorAvatar"
             :author="data.author"
             :date="data.date"
             :content="data.content"
