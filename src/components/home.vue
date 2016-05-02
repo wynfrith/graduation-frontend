@@ -13,8 +13,8 @@ export default {
     waitForData: true,
     data (trans) {
       return Promise.all([
-        this.$http.get(this.fetchUrl, { page: this.$route.query.page || 1}),
-        this.$http.get('http://127.0.0.1:3000/api/q/recommends')
+        store.getList({page: this.$route.page || 1}),
+        store.getRecommendList()
       ]).then((res) => {
         return {
           items: res[0].data.questions,
@@ -38,22 +38,24 @@ export default {
   methods: {
     load(type) {
       this.actived = type;
-      this.$http.get(this.fetchUrl).then((res) => {
-        this.items = res.data.questions;
-        this.page = res.data.page;
-      });
+      store.getList({
+        page: this.$route.page || 1,
+        sort: this.actived
+      }).then(({data})=> {
+        this.items = data.questions;
+        this.page = data.page;
+      })
     },
   },
-  computed: {
-    fetchUrl: function() {
-      let url = 'http://127.0.0.1:3000/api/q/list'
-      return this.actived == 'hot' ? url+'?sort=hot' : url;
-    }
-  },
   events: {
-    'page': function(datas) {
-      this.items = datas.questions;
-      this.page = datas.page;
+    'goPage': function(pageNum) {
+      store.getList({
+        page: pageNum || 1,
+        sort: this.actived
+      }).then(({data}) => {
+        this.items = data.questions;
+        this.page = data.page;
+      })
     },
     'checkLogin': function(userBrief) {
       this.userBrief = userBrief;
@@ -100,7 +102,7 @@ export default {
 
         <div class="ui center aligned container">
           <!-- 导航条 -->
-          <pagination :current="page.currPage" :nums="page.pageNum" :url="fetchUrl"></pagination>
+          <pagination :current="page.currPage" :nums="page.pageNum" ></pagination>
         </div>
 
       </div>

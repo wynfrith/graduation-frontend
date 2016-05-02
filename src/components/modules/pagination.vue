@@ -2,17 +2,11 @@
 export default {
   props: {
     current: Number,
-    nums: Number,
-    url: String
+    nums: Number
   },
   methods: {
     go(pageNum) {
-      let url = this.url;
-      console.log(url);
-
-      this.$http.get(url,  {page: pageNum}).then((res) => {
-        this.$dispatch('page', res.data)
-      })
+      this.$dispatch('goPage', pageNum);
     }
   }
 }

@@ -3,6 +3,14 @@ export default class Store {
     this.domain = 'http://127.0.0.1:3000'
   }
 
+  getList(options) {
+      return Vue.http.get(`${this.domain}/api/q/list`, options)
+  }
+
+  getRecommendList() {
+    return Vue.http.get(`${this.domain}/api/q/recommends`)
+  }
+
   login(username, password) {
     return Vue.http.post(`${this.domain}/api/login`, {
       username: username, password: password
