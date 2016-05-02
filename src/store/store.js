@@ -1,6 +1,7 @@
 export default class Store {
   constructor(){
-    this.domain = 'http://127.0.0.1:3000'
+    // this.domain = 'http://127.0.0.1:3000'
+    this.domain = ''
   }
 
   getList(options) {
