@@ -13,10 +13,11 @@ export default {
     waitForData: true,
     data (trans) {
       this.currTag = trans.to.query.tag;
+      this.actived = trans.to.query.sort || 'new'
       return Promise.all([
         store.getList({
-          tag: this.currTag || undefined,
-          page: this.$route.page || 1,
+          tag: this.currTag,
+          page: trans.to.query.page,
           sort: this.actived
         }),
         store.getRecommendList(),
@@ -47,14 +48,12 @@ export default {
   methods: {
     load(type) {
       this.actived = type;
-      store.getList({
-        page: this.$route.page || 1,
-        sort: this.actived,
-        tag: this.currTag || undefined
-      }).then(({data})=> {
-        this.items = data.questions;
-        this.page = data.page;
-      })
+
+      this.$router.go({name: 'home', query: {
+        tag: this.currTag,
+        sort: this.actived == 'hot' ? 'hot' : undefined
+      }})
+
     },
     clearTag() {
       this.currTag = ''
@@ -63,14 +62,11 @@ export default {
   },
   events: {
     'goPage': function(pageNum) {
-      store.getList({
-        tag: this.currTag || undefined,
-        page: pageNum || 1,
-        sort: this.actived
-      }).then(({data}) => {
-        this.items = data.questions;
-        this.page = data.page;
-      })
+      this.$router.go({name: 'home', query: {
+        tag: this.currTag,
+        page: pageNum,
+        sort: this.actived == 'hot' ? 'hot' : undefined
+      }})
     },
     'checkLogin': function(userBrief) {
       this.userBrief = userBrief;

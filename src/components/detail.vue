@@ -17,6 +17,7 @@
       'recommend': Recommend
     },
     route: {
+      // waitForData: true,
       data ({ to: { params: { qid }}}) {
         return Promise.all([
           this.$http.get('http://127.0.0.1:3000/api/q/recommends'),

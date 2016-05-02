@@ -148,7 +148,13 @@ export default class Store {
     } else {
       return Promise.resolve({ data: {}});
     }
+  }
 
+  vote(qaId, isLike){
+    return Vue.http.post(`${this.domain}/api/user/vote`, {
+      qaId: qaId,
+      isLike: isLike
+    })
   }
 
 }

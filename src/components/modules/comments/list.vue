@@ -15,7 +15,6 @@ import Comment from './comment.vue'
    },
    methods: {
      onSubmit() {
-       console.info(this.$root.$get('userBrief').username);
        if (this.newComment.trim() == '') {
          this.$dispatch('msg', { type: 'error', text: '写点啥吧~'});
          this.$els.commentInput.focus();
@@ -36,7 +35,7 @@ import Comment from './comment.vue'
                 author: currentUser.username,
                 content: this.newComment
               })
-              
+
               this.newComment = '';
 
             }

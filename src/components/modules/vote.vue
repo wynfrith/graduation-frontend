@@ -1,37 +1,35 @@
 <script>
   export default {
     props: {
-      counts: Number
+      like: Array,
+      hate: Array
     },
     data() {
       return {
-        voteStatus: 0,
         msg: ''
+      }
+    },
+    computed: {
+      'counts': function () {
+        return this.like.length - this.hate.length;
       }
     },
     methods: {
       vote(num) {
         if(num == 1) {
-          if (this.voteStatus == 1) { // undo like
-            this.voteStatus = 0;
-            this.counts -= 1;
-            this.$dispatch('msg', { type: 'ok', text: '您取消了点赞'});
-          } else { // like
-            this.voteStatus += 1;
-            this.counts += 1;
-            this.$dispatch('msg', { type: 'ok', text:'点赞成功!'});
-          }
+          this.$dispatch('vote', true)
         } else if(num == -1) {
-          if (this.voteStatus == -1) {
-            this.voteStatus = 0; // undo hate
-            this.counts += 1;
-            this.$dispatch('msg', { type: 'ok', text:'您取消了踩'});
-          } else {
-            this.voteStatus -= 1;
-            this.counts -= 1;
-            this.$dispatch('msg', { type: 'ok', text:'您踩了一下..'});
-          }
+          this.$dispatch('vote', false)
         }
+      },
+      getStatus() {
+        // 判断登陆
+        const username = this.$root.$get('userBrief').username;
+        if (this.like.indexOf(username) != -1) {
+          return 1
+        } else if (this.hate.indexOf(username) != -1){
+          return -1
+        } else return 0
       }
     }
   }
@@ -42,7 +40,7 @@
     <button
       type="button"
       class="ui button up"
-      :class="{'green': voteStatus == 1}"
+      :class="{'green': getStatus() == 1}"
       @click="vote(1)"
     ><i class="caret up icon"></i></button>
 
@@ -51,7 +49,7 @@
     <button
       type="button"
       class="ui button down"
-      :class="{'red': voteStatus == -1}"
+      :class="{'red': getStatus() == -1}"
       @click="vote(-1)"
     ><i class="caret down icon"></i></button>
   </div>

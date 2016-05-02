@@ -31,7 +31,25 @@ export default {
   events: {
     'addComment': function(comment) {
       this.data.comments.push(comment);
-      console.log(this.data);
+    },
+    'vote': function(isLike) {
+      store.vote(this.data._id, isLike).then(({status, data}) => {
+        if(status == 401) {
+          this.$dispatch('msg', { type: 'error', text: '请先登录'});
+          return false;
+        }
+        this.$dispatch('msg', { type: 'ok', text: data.msg})
+        const likeIndex = this.data.like.indexOf(data.username);
+        const hateIndex = this.data.hate.indexOf(data.username);
+        if (likeIndex != -1) this.data.like.splice(likeIndex, 1);
+        if (hateIndex != -1) this.data.hate.splice(hateIndex, 1);
+
+        if (data.status == 1) {
+          this.data.like.push(data.username)
+        } else if (data.status == -1) {
+          this.data.hate.push(data.username)
+        } 
+      });
     }
   }
 }
@@ -39,7 +57,7 @@ export default {
 </script>
 <template>
   <div class="post-item">
-    <vote :counts="data.score"></vote>
+    <vote :like="data.like" :hate="data.hate" ></vote>
     <div class="content">
       <div class="fmt" v-html="data.content | marked">
       </div>
