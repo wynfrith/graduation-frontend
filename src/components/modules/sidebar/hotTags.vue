@@ -4,11 +4,11 @@
       <b><a v-link="{name: 'tags'}">热门标签</a></b>
       <div class="ui divider"></div>
       <div class="tags">
-        <a href="/">javascript</a>
-        <a href="/">python</a>
-        <a href="/">java</a>
-        <a href="/">ruby</a>
-        <a href="/">c#</a>
+        <a v-link="{name: 'home', query: {tag: 'javascript'}}">javascript</a>
+        <a v-link="{name: 'home', query: {tag: 'python'}}">python</a>
+        <!-- <a v-link="{name: 'home', query: {tag: 'java'}}">java</a> -->
+        <a v-link="{name: 'home', query: {tag: 'ruby'}}">ruby</a>
+        <!-- <a v-link="{name: 'home', query: {tag: 'c#'}}">c#</a> -->
       </div>
     </div>
   </div>

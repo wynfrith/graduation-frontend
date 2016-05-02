@@ -12,7 +12,7 @@ export default {
 }
 </script>
 <template>
-  <div class="ui pagination menu main-pagination">
+  <div class="ui pagination menu main-pagination" v-if="nums > 1">
     <a class="item icon" v-if="current > 1" @click="go(current-1)">
       <i class="left arrow icon"></i>
     </a>

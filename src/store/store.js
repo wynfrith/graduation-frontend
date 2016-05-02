@@ -140,4 +140,15 @@ export default class Store {
     return Vue.http.get(`${this.domain}/api/tags`)
   }
 
+  getTagByName(name){
+    if (name) {
+      return Vue.http.get(`${this.domain}/api/tagByName`,{
+        name: name
+      })
+    } else {
+      return Promise.resolve({ data: {}});
+    }
+
+  }
+
 }

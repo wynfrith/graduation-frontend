@@ -33,7 +33,7 @@
     <div class="inline content">
       <a v-link="'q/' + id" class="ui header title">{{title}}</a>
       <span class="tags-box">
-        <a class="ui mini teal label" v-for="tag in tags">{{ tag }}<a>
+        <a class="ui mini teal label" v-for="tag in tags" v-link="{name: 'home', query: { tag: tag}}">{{ tag }}<a>
       </span>
 
       <p class="meta">

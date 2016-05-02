@@ -12,14 +12,21 @@ export default {
   route: {
     waitForData: true,
     data (trans) {
+      this.currTag = trans.to.query.tag;
       return Promise.all([
-        store.getList({page: this.$route.page || 1}),
-        store.getRecommendList()
+        store.getList({
+          tag: this.currTag || undefined,
+          page: this.$route.page || 1,
+          sort: this.actived
+        }),
+        store.getRecommendList(),
+        store.getTagByName(this.currTag)
       ]).then((res) => {
         return {
           items: res[0].data.questions,
           page:  res[0].data.page,
-          recommends: res[1].data
+          recommends: res[1].data,
+          tagDetail: res[2].data
         }
       })
     }
@@ -33,6 +40,8 @@ export default {
       items: [],
       page: {}, // 分页情况
       recommends: [],
+      currTag: '',
+      tagDetail: {}
     }
   },
   methods: {
@@ -40,16 +49,22 @@ export default {
       this.actived = type;
       store.getList({
         page: this.$route.page || 1,
-        sort: this.actived
+        sort: this.actived,
+        tag: this.currTag || undefined
       }).then(({data})=> {
         this.items = data.questions;
         this.page = data.page;
       })
     },
+    clearTag() {
+      this.currTag = ''
+      this.$router.go({name: 'home'})
+    }
   },
   events: {
     'goPage': function(pageNum) {
       store.getList({
+        tag: this.currTag || undefined,
         page: pageNum || 1,
         sort: this.actived
       }).then(({data}) => {
@@ -71,12 +86,14 @@ export default {
   <div class="ui container">
     <div class="ui two column center grid">
       <div class="twelve wide column">
-        <div class="ui message">
-          <i class="close icon"></i>
+        <div class="ui message" v-if="currTag ||  tagDetail.name">
+          <i class="close icon" @click="clearTag"></i>
           <div class="header">
-            javascript
+            {{ tagDetail.name }}
           </div>
-          <p>JavaScript一种直译式脚本语言，是一种动态类型、弱类型、基于原型的语言，内置支持类型</p>
+          <p>
+            {{ tagDetail.memo }}
+          </p>
         </div>
         <div class="ui top attached secondary pointing menu">
           <a class="item" v-bind:class="{'active': actived == 'new' }" @click="load('new')">最新发布</a>
