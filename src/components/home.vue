@@ -106,7 +106,7 @@ export default {
                 :answers="item.answerNum"
                 :views="item.views"
                 :tags="item.tags"
-                :date="item.date"
+                :date="item.createdAt"
               >
               </question-brief>
           </div>

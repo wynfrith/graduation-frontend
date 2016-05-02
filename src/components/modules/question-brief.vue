@@ -37,7 +37,7 @@
       </span>
 
       <p class="meta">
-        <a v-link="'u/' + author">{{author}}</a> <span>{{date | beautyDate }}</span>
+        <a v-link="'u/' + author">{{author}}</a>&nbsp;&nbsp; <span>{{date | beautyDate }}</span>
       </p>
     </div>
   </div>
