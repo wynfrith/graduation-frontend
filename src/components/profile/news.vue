@@ -6,8 +6,6 @@ export default {
       store.getUserQuestions(username),
       store.getUserAnswers(username)
     ]).then(([question, answer]) => {
-      console.log(question.data);
-      console.log(answer.data);
       this.q = question.data;
       this.a = answer.data;
       done();
@@ -31,7 +29,7 @@ export default {
      <div class="item question-item" v-for="question in q.questions">
        <div class="content">
          <span class="views"><span>{{ question.views }}</span> 浏览</span>
-         <a class="ui header">{{ question.title }}</a>
+         <a class="ui header"  v-link="{name: 'question', params: {qid: question._id}}">{{ question.title }}</a>
        </div>
      </div>
    </div>
@@ -44,8 +42,8 @@ export default {
      </div>
     <div class="item question-item" v-for="answer in a.answers">
       <div class="content">
-        <span class="answers"><span>{{ answer.view }}</span> 回答</span>
-        <a class="ui header">{{ answer.title }}</a>
+        <span class="answers"><span>{{ answer.score }}</span> 票数</span>
+        <a class="ui header" v-link="{name: 'question', params: {qid: answer.questionId}}">{{ answer.content | limit 30 }}</a>
       </div>
     </div>
   </div>

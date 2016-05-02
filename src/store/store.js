@@ -56,12 +56,12 @@ export default class Store {
     return Vue.http.get(`${this.domain}/api/user/infos`);
   }
 
-  getUserQuestions(username) {
-    return Vue.http.get(`${this.domain}/api/u/${username}/questions`)
+  getUserQuestions(username,query) {
+    return Vue.http.get(`${this.domain}/api/u/${username}/questions`,query)
   }
 
-  getUserAnswers(username) {
-    return Vue.http.get(`${this.domain}/api/u/${username}/answers`)
+  getUserAnswers(username,query) {
+    return Vue.http.get(`${this.domain}/api/u/${username}/answers`,query)
   }
 
   changeProfile(infos) {

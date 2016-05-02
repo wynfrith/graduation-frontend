@@ -48,3 +48,14 @@ h4 {
 .ui.basic.button {
   margin: 0 auto;
 }
+
+.ui.center .ui.mini.button {
+  background-color: #FFDEDE;
+  font-size: .9rem;
+  color: #787878;
+  padding: 6px 10px;
+  font-weight: normal;
+}
+.ui.center .ui.mini.button:hover {
+  background-color: #F1D0D0;
+}

@@ -116,13 +116,13 @@ export default {
                 </div>
               </div>
               <div class="ten wide column" >
-                <div v-if="isCurrent('news')"  v-cloak >
+                <div v-show="isCurrent('news')"  v-cloak >
                   <news ></news>
                 </div>
-                <div v-if="isCurrent('answer')" v-cloak>
+                <div v-show="isCurrent('answer')" v-cloak>
                   <answer></answer>
                 </div>
-                <div v-if="isCurrent('question')" v-cloak>
+                <div v-show="isCurrent('question')" v-cloak>
                   <question></question>
                 </div>
               </div>

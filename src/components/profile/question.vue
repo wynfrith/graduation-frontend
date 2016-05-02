@@ -14,6 +14,19 @@
         questions: [],
         page: {}
       }
+    },
+    methods: {
+      loadMore() {
+        const username = this.$route.params.username;
+        store.getUserQuestions(username, {page: this.page.currPage+1})
+          .then(({data}) => {
+            console.log(data);
+            this.page = data.page;
+            data.questions.forEach((q) => {
+              this.questions.push(q);
+            })
+          })
+      }
     }
   }
 </script>
@@ -31,7 +44,11 @@
          <span class="publish-time">{{ question.createdAt }}</span>
        </div>
      </div>
+     <div class="ui center aligned container" v-show="questions.length < page.count" v-cloak >
+       <button class="ui mini button" @click="loadMore"> 他的更多提问 </button>
+      </div>
    </div>
+
 </template>
 
 <style scoped src="./style.css"></style>

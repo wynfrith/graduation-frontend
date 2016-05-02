@@ -20,8 +20,10 @@ Vue.component('message', Message);
 // register filter
 import beautyDate from './filter/beautyDate.js'
 import dateFormat from './filter/dateFormat.js'
+import strLimit from './filter/strLimit.js'
 Vue.filter('beautyDate', beautyDate);
 Vue.filter('dateFormat', dateFormat);
+Vue.filter('limit', strLimit);
 
 // register router
 const router = new VueRouter()
