@@ -12,7 +12,7 @@ export default class Store {
     return Vue.http.get(`${this.domain}/api/q/recommends`)
   }
 
-  getQuestion(id) {
+  getQuestion(qid) {
     return Vue.http.get(`${this.domain}/api/question/${qid}`)
   }
 

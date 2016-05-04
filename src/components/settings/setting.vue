@@ -48,9 +48,9 @@ export default {
           <a class="item" :class="{'active': isCurrent('info') }" @click="section = 'info'" >
             个人资料
           </a>
-          <a class="item" :class="{'active': isCurrent('email') }" @click="section = 'email'">
+          <!-- <a class="item" :class="{'active': isCurrent('email') }" @click="section = 'email'">
             修改邮箱
-          </a>
+          </a> -->
           <a class="item" :class="{'active': isCurrent('password') }" @click="section = 'password'">
             修改密码
           </a>

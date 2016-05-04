@@ -1,7 +1,5 @@
 export default function beautyDate(date) {
-  console.log(date);
   var post = new Date(date);
-  console.log(post);
   var date= new Date();
   var time =date.getTime() - post.getTime();
   if(time < 60 * 1000 ){

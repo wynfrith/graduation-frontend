@@ -11,7 +11,15 @@ export default function routerMap(router) {
         }
       }
     }
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100)
     transition.next();
+  })
+
+  router.afterEach(function (transition) {
+
+
   })
 
   router.map({
