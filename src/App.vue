@@ -5,7 +5,8 @@
     name: "App",
     data() {
       return {
-        userBrief: {}
+        userBrief: {},
+        notifyCount: 0
       }
     },
     components: {
@@ -21,6 +22,10 @@
         .then(({data}) => {
           if(data.code == 0) {
             this.userBrief = data.userBrief;
+            // 拉取用户通知
+            store.pullNotify().then(({data}) => {
+              this.notifyCount = data;
+            })
           }
         })
     },
@@ -36,12 +41,16 @@
       },
       'signout': function() {
         this.userBrief = {};
+      },
+      'readNotify': function(num) {
+        console.log(num);
+        this.notifyCount -=  num;
       }
     }
   }
 </script>
 
 <template>
-  <navbar :user-brief="userBrief"></navbar>
+  <navbar :user-brief="userBrief" :notify-count="notifyCount"></navbar>
   <router-view transition="fade" transition-mode="out-in" :user-brief="userBrief"></router-view>
 </template>

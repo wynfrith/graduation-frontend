@@ -2,7 +2,8 @@
 <script>
   export default {
     props: {
-      userBrief: Object
+      userBrief: Object,
+      notifyCount: Number
     },
     data() {
       return {
@@ -44,7 +45,7 @@
           <a v-link="{ name: 'login' }" class="item" v-if="!userBrief.username">登陆</a>
           <a class="item icon" v-link="{name: 'notify'}" v-if="userBrief.username">
             <i class="alarm outline icon "></i>
-            <div class="floating mini ui green empty circular label"></div>
+            <div v-show="notifyCount > 0" class="floating mini ui green empty circular label"></div>
           </a>
           <a class="img-item" v-if="userBrief.username">
             <div class="ui simple dropdown img-dropdown" >

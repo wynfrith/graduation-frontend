@@ -1,7 +1,7 @@
 export default class Store {
   constructor(){
-    // this.domain = 'http://127.0.0.1:3000'
-    this.domain = ''
+    this.domain = 'http://127.0.0.1:3000'
+    // this.domain = ''
   }
 
   getList(options) {
@@ -156,6 +156,22 @@ export default class Store {
       qaId: qaId,
       isLike: isLike
     })
+  }
+
+  pullNotify() {
+    return Vue.http.post(`${this.domain}/api/user/pullNotify`)
+  }
+
+  getNotifies() {
+    return Vue.http.get(`${this.domain}/api/user/notifies`)
+  }
+
+  readNotify(nid) {
+    return Vue.http.post(`${this.domain}/api/user/notifies/read`, {nid: nid})
+  }
+
+  readAllNotify() {
+    return Vue.http.post(`${this.domain}/api/user/notifies/readAll`)
   }
 
 }
