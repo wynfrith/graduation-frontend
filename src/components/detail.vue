@@ -113,7 +113,10 @@
         <div class="ui segment">
 
           <!-- question -->
-          <h3><span class="decoration"> 问 </span>{{ data.question.title }}</h3>
+          <h3><span class="decoration"> 问 </span>
+            <del v-if="data.question.isDel">{{ data.question.title }}</del>
+            <span v-if="!data.question.isDel">{{ data.question.title }}</span>
+          </h3>
           <div class="ui divider"></div>
 
           <qa :data="data.question"></qa>
