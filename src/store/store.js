@@ -12,6 +12,10 @@ export default class Store {
     return Vue.http.get(`${this.domain}/api/q/recommends`)
   }
 
+  getQuestion(id) {
+    return Vue.http.get(`${this.domain}/api/question/${qid}`)
+  }
+
   login(username, password) {
     return Vue.http.post(`${this.domain}/api/login`, {
       username: username, password: password
@@ -139,6 +143,13 @@ export default class Store {
       title: title,
       tagStr: tagStr
     });
+  }
+
+  postAnswer(content, id) {
+    return Vue.http.post(`${this.domain}/api/user/answer`, {
+      answer: { content: content },
+      qid: id
+    })
   }
 
   getTags() {

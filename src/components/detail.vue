@@ -20,8 +20,8 @@
       // waitForData: true,
       data ({ to: { params: { qid }}}) {
         return Promise.all([
-          this.$http.get('http://127.0.0.1:3000/api/q/recommends'),
-          this.$http.get(`http://127.0.0.1:3000/api/question/${qid}`)
+          store.getRecommendList(),
+          store.getQuestion(qid)
         ]).then((res) => {
           return {
             recommends: res[0].data,
@@ -52,10 +52,7 @@
         }
         else {
           this.errorField = ''
-          this.$http.post('http://127.0.0.1:3000/api/user/answer', {
-            answer: { content: content },
-            qid: this.$route.params.qid
-          })
+          store.postAnswer(content, this.$route.params.qid)
             .then((res) => {
               console.log(res);
               if (res.status == 200) {

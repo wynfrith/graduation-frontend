@@ -12,7 +12,6 @@ export default {
   methods: {
     onSubmit() {
       if(this.form.email.$error.required) {
-        console.log('...');
         this.$dispatch('msg', false, '请输入新邮箱地址');
       } else if(this.form.email.$invalid) {
         this.$dispatch('msg', false, '请输入正确的邮箱地址!');

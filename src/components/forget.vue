@@ -13,7 +13,7 @@ export default {
     store.getCaptchaToken()
       .then(({data}) => {
         this.captchaToken = data;
-        this.captchaUrl = 'http://127.0.0.1:3000/api/captcha?r=' + data;
+        this.captchaUrl = store.domain + '/api/captcha?r=' + data;
       })
   },
   methods: {
@@ -26,9 +26,9 @@ export default {
               store.getCaptchaToken()
                 .then(({data}) => {
                   this.captchaToken = data;
-                  this.captchaUrl = 'http://127.0.0.1:3000/api/captcha?r=' + data;
+                  this.captchaUrl = store.domain + '/api/captcha?r=' + data;
                 })
-                
+
             } else {
               this.$router.go({name: 'registered'});
             }
