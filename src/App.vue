@@ -28,6 +28,12 @@
             })
           }
         })
+      // 通知轮询
+      setInterval(() => {
+        store.pullNotify().then(({data}) => {
+          this.notifyCount = data;
+        })
+      }, 1000 * 60)
     },
     events: {
       'changeBrief': function (text) {
@@ -42,8 +48,10 @@
       'signout': function() {
         this.userBrief = {};
       },
+      'refreshNotify': function(count) {
+        this.notifyCount = count;
+      },
       'readNotify': function(num) {
-        console.log(num);
         this.notifyCount -=  num;
       }
     }

@@ -6,21 +6,30 @@
       }
     },
     ready() {
-      $('.notify .list').on('click', 'a', () => {
-        store.readNotify($(this).parent().data('id'))
-          .then(({data}) => {
-            if (data.code == 0)
-              this.$dispatch('readNotify', 1)
-          })
+      $('.notify .list').on('click', 'a', (e) => {
+        var $curr = $(e.currentTarget);
+        var $item  = $curr.parent().parent().parent();
+        if ($item.hasClass('unread')) {
+          store.readNotify($curr.parent().data('id'))
+            .then(({data}) => {
+              if (data.code == 0)
+                this.$dispatch('readNotify', 1)
+            })
+        }
+
       })
     },
     route: {
       // waitForData: true,
       data(trans) {
-        store.getNotifies()
-          .then(({data}) => {
-            this.notifies = data;
-          })
+        store.pullNotify().then(({data}) => {
+          this.$dispatch('refreshNotify', data);
+          store.getNotifies()
+            .then(({data}) => {
+              this.notifies = data;
+            })
+        })
+
       }
     },
     methods: {

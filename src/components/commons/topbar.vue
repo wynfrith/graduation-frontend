@@ -45,7 +45,7 @@
           <a v-link="{ name: 'login' }" class="item" v-if="!userBrief.username">登陆</a>
           <a class="item icon" v-link="{name: 'notify'}" v-if="userBrief.username">
             <i class="alarm outline icon "></i>
-            <div v-show="notifyCount > 0" class="floating mini ui green empty circular label"></div>
+            <div v-show="notifyCount > 0" class="floating mini ui green empty label">{{ notifyCount}}</div>
           </a>
           <a class="img-item" v-if="userBrief.username">
             <div class="ui simple dropdown img-dropdown" >
@@ -72,9 +72,9 @@
 .header.item a{
   color: rgba(0,0,0,.8)
 }
-.item .empty.circular.label {
-  top: 8px;
-  left: 45px;
+.item .empty.label {
+  top: 5px;
+  left: 40px;
 }
 .img-dropdown:hover{
   cursor: pointer;
