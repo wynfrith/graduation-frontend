@@ -17,11 +17,15 @@
               else {
                 this.okMsg = '登陆成功， 正在跳转..'
                 store.setAuth(true, data.token);
+                store.pullNotify().then(({data}) => {
+                  this.$dispatch('refreshNotify', data);
+                })
                 store.checkLoginAndFetch(data.token)
                   .then(({data})=> {
                     // store to localStorage
                     localStorage.setItem("u", JSON.stringify(data.userBrief));
                     this.$dispatch('login', data.userBrief);
+
                     this.$router.go('home');
                   })
               }

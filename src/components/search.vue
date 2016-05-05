@@ -109,7 +109,7 @@
           type: 'question',
           text: '',
           page: 1,
-          limit: 1
+          limit: 10
         },
         questions: [],
         users: [

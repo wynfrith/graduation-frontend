@@ -90,4 +90,16 @@ a.ui.header.title:hover {
 .meta a:hover {
   text-decoration: underline;
 }
+
+/* tag */
+.tags-box .ui.teal.label {
+  background-color: #afcb87 !important;
+  padding: 3px 4px;
+  border-radius: 2px;
+}
+.tags-box .ui.teal.label:hover {
+  background-color: #9DAD87 !important;
+  color: rgba(0,0,0,.87);
+
+}
 </style>
