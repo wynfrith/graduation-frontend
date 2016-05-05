@@ -48,7 +48,11 @@ export default {
           this.data.like.push(data.username)
         } else if (data.status == -1) {
           this.data.hate.push(data.username)
-        } 
+        }
+      }).catch(({status}) => {
+        if (status == 401 || status == 0) {
+          this.$dispatch('msg', { type: 'error', text: '请先登录!'});
+        }
       });
     }
   }

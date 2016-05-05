@@ -6,24 +6,47 @@
     },
     methods: {
       doSearch() {
-        this.search.page = 1;
-        store.doSearch(this.search)
-          .then(({data}) => {
-            this.count = data.page.count;
-            this.users = this.questions = this.tags = [];
-            this[this.search.type+'s'] = data.result;
-          })
+        if (this.search.text.trim().length == 0) {
+          this.msg = '请输入搜索内容'
+          this.$els.searchBox.focus();
+        } else {
+          this.search.page = 1;
+          this.$router.go({name: 'search', query: {
+            type: this.search.type,
+            text: this.search.text.trim()
+          }})
+        }
+
+        // store.doSearch(this.search)
+        //   .then(({data}) => {
+        //     this.$router.go({name: 'search', query: {
+        //       type: this.search.type
+        //     }})
+        //     this.count = data.page.count;
+        //     this.users = this.questions = this.tags = [];
+        //     this[this.search.type+'s'] = data.result;
+        //   })
       },
       changeSearchType(type) {
-        this.search.page = 1;
         this.search.type = type;
         this.count = 0;
-        store.doSearch(this.search)
-          .then(({data}) => {
-            this.count = data.page.count;
-            this.users = this.questions = this.tags = [];
-            this[type+'s'] = data.result;
-          })
+        if (this.search.text.trim().length > 0 ) {
+          this.$router.go({name: 'search', query: {
+            type: this.search.type,
+            text: this.search.text.trim(),
+            t: +(new Date)
+          }})
+        }
+
+        // this.search.page = 1;
+        // this.search.type = type;
+        // this.count = 0;
+        // store.doSearch(this.search)
+        //   .then(({data}) => {
+        //     this.count = data.page.count;
+        //     this.users = this.questions = this.tags = [];
+        //     this[type+'s'] = data.result;
+        //   })
         // 进行一次搜索
       },
       loadMore() {
@@ -41,9 +64,7 @@
           })
       },
       showLoadMore() {
-        console.log(this.count);
         let length = this[this.search.type+'s'].length;
-        console.log(length);
         return this.count > length;
       }
     },
@@ -55,22 +76,40 @@
     route: {
       waitForData: true,
       data(trans) {
-        this.search.text = trans.to.query.text;
-        return store.doSearch(this.search)
-            .then(({data}) => {
-              this.count = data.page.count;
-              this.questions = data.result;
-            })
+        const query = trans.to.query;
+        this.firstLoad = (!query.text && !query.type) ;
+        this.search.text = query.text;
+        this.search.type = query.type || 'question';
+
+        if (this.search.text.trim().length > 0 ) {
+          this.search.page = 1;
+          this.loading = true;
+          store.doSearch(this.search)
+              .then(({data}) => {
+                this.count = data.page.count;
+                this.users = this.questions = this.tags = [];
+                this[this.search.type+'s'] = data.result;
+                setTimeout(() => {
+                  this.loading = false;
+                }, 300)
+              })
+        }
+
+        trans.next()
+
       }
     },
     data() {
       return {
+        firstLoad:  false,
+        loading: false,
+        msg: '',
         count: 0,
         search: {
           type: 'question',
           text: '',
           page: 1,
-          limit: 15
+          limit: 1
         },
         questions: [],
         users: [
@@ -88,6 +127,7 @@
   <div class="ui container">
     <div class="ui two column grid">
       <div class="twelve wide column  ">
+        <message :msg.sync="msg" color="orange"></message>
         <div class="search-box">
           <ul>
             <li :class="{'actived': search.type == 'question'}" @click="changeSearchType('question')">问题</li>
@@ -99,17 +139,19 @@
           <form class="ui form ">
             <div class="fields">
               <div class="twelve wide field">
-                  <input type="text" placeholder="搜索你想要的" v-model="search.text">
+                  <input type="text" placeholder="搜索你想要的"  v-model="search.text" v-el:search-box >
               </div>
               <div class="three wide field">
-                <button class="ui blue green fluid button" @click="doSearch">搜索</button>
+                <button class="ui blue green fluid button"
+                  @click="doSearch"
+                  :class="{'loading': loading }">搜索</button>
               </div>
             </div>
           </form>
         </div>
 
         <div class="search-content">
-          <h4>共找到{{ questions.length + users.length + tags.length }}个结果</h4>
+          <h4 v-show="!firstLoad">共找到{{ questions.length + users.length + tags.length }}个结果</h4>
 
            <!-- 问题 -->
            <div class="search-list relaxed ui list">

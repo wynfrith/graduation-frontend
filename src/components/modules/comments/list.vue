@@ -43,6 +43,10 @@ import Comment from './comment.vue'
               this.$dispatch('msg', { type: 'ok', text: data.msg});
             }
           }
+        }).catch(({status}) => {
+          if (status == 401 || status == 0) {
+            this.$dispatch('msg', { type: 'error', text: '请先登录!'});
+          }
         })
 
      }

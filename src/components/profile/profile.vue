@@ -94,13 +94,14 @@ export default {
               <div class="scores">
                 <div class="ui labeled button" tabindex="0">
                   <div class="ui button btn">
-                    <i class="heart icon"></i> 赞同
+                    <i class="heart icon"></i> 积分数
                   </div>
                   <span class="ui basic label">
                     {{ user.scores || 0 }}
                   </span>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

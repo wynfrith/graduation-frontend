@@ -36,6 +36,11 @@ export default {
                 this.$dispatch('msg', false, data.msg)
               }
             }
+          }).catch(({status}) => {
+            if (status == 401 || status == 0) {
+              this.$dispatch('msg', false, '请先登录')
+              setTimeout(()=> {this.$router.go({name:'login'})}, 800)
+            }
           })
       }
     },

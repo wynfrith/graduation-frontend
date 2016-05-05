@@ -15,9 +15,12 @@
     methods: {
       search() {
         this.$router.go({name: 'search', query:{text: this.searchText}})
+        this.searchText = '';
+        this.$els.searchBox.blur()
       },
       signout() {
         store.setAuth(false);
+        localStorage.removeItem('u');
         this.$dispatch('signout');
         this.msg='您已退出登录！'
         this.$router.go({name: 'home'});
@@ -35,7 +38,7 @@
       <div class="right menu">
         <div class="ui search item">
           <div class="ui icon input">
-            <input class="prompt" type="text" placeholder="搜索问题或标签" v-model="searchText">
+            <input class="prompt" type="text" v-el:search-box @keyup.enter="search" placeholder="搜索问题或标签" v-model="searchText">
             <i class="search icon link" @click="search"></i>
           </div>
           <div class="results"></div>

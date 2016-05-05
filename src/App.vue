@@ -17,15 +17,31 @@
       // 如果已经登陆， 取出 userBrief 并向下boradcast事件
       const token = localStorage.getItem('token')
       if (!token) return;
+      // 临时的userBrief， 为了防止闪动， 首先从localStorage读取
+      let userBrief = localStorage.getItem('u');
+      if (userBrief) {
+        try {
+          userBrief = JSON.parse(userBrief)
+          this.userBrief = userBrief;
+        } catch(e) {
+          localStorage.removeItem('u');
+          userBrief = {}
+        }
+      }
+
       store.setAuth(token);
       store.checkLoginAndFetch(token)
         .then(({data}) => {
           if(data.code == 0) {
             this.userBrief = data.userBrief;
+            localStorage.setItem('u', JSON.stringify(data.userBrief))
             // 拉取用户通知
             store.pullNotify().then(({data}) => {
               this.notifyCount = data;
             })
+          } else {
+            localStorage.removeItem('u');
+            this.userBrief = {}
           }
         })
       // 通知轮询
@@ -38,9 +54,11 @@
     events: {
       'changeBrief': function (text) {
         this.userBrief.info.brief = text;
+        localStorage.setItem('u', JSON.stringify(this.userBrief))
       },
       'changeAvatar': function(url) {
         this.userBrief.info.photoAddress = url;
+        localStorage.setItem('u', JSON.stringify(this.userBrief))
       },
       'login': function(data) {
         this.userBrief = data;

@@ -80,6 +80,10 @@
                   this.msg = data.msg;
                 }
               }
+            }).catch(({status}) => {
+              if (status == 401 || status == 0) {
+                this.msg = "请先登录!"
+              }
             })
 
         }

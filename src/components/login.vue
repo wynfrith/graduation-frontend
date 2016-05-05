@@ -19,6 +19,8 @@
                 store.setAuth(true, data.token);
                 store.checkLoginAndFetch(data.token)
                   .then(({data})=> {
+                    // store to localStorage
+                    localStorage.setItem("u", JSON.stringify(data.userBrief));
                     this.$dispatch('login', data.userBrief);
                     this.$router.go('home');
                   })

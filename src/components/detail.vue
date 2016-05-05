@@ -54,7 +54,6 @@
           this.errorField = ''
           store.postAnswer(content, this.$route.params.qid)
             .then((res) => {
-              console.log(res);
               if (res.status == 200) {
                 const currentUser = this.$root.$get('userBrief');
 
@@ -74,6 +73,10 @@
 
               } else {
                 this.errorMsg = '发布失败, 请重新尝试'
+              }
+            }).catch(({status}) => {
+              if (status == 401 || status == 0) {
+                this.errorMsg = '请先登录！'
               }
             })
 

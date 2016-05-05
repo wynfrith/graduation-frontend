@@ -32,6 +32,10 @@
             else {
               this.$router.go({name: 'registered'})
             }
+          }).catch(({status}) => {
+            if (status == 401 || status == 0) {
+              this.errMsg = '请先登录！'
+            }
           })
       }
     }

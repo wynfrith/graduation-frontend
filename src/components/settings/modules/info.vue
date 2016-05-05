@@ -37,6 +37,10 @@ export default {
           this.$dispatch('fetchUser', data);
           done()
         }
+      }).catch(({status}) => {
+        if (status == 401 || status == 0) {
+          this.$router.go({name: 'home'})
+        }
       })
   },
   ready() {
