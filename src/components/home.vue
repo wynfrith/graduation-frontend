@@ -14,6 +14,7 @@ export default {
     data (trans) {
       this.currTag = trans.to.query.tag;
       this.actived = trans.to.query.sort || 'new'
+      this.loading = true;
       return Promise.all([
         store.getList({
           tag: this.currTag,
@@ -23,6 +24,7 @@ export default {
         store.getRecommendList(),
         store.getTagByName(this.currTag)
       ]).then((res) => {
+        this.loading = false;
         return {
           items: res[0].data.questions,
           page:  res[0].data.page,
@@ -37,6 +39,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       actived: 'new',
       items: [],
       page: {}, // 分页情况
@@ -82,7 +85,7 @@ export default {
   <div class="ui container">
     <div class="ui two column center grid">
       <div class="twelve wide column">
-        <div class="ui message" v-if="currTag ||  tagDetail.name">
+        <div class="ui message" v-if="currTag &&  tagDetail.name">
           <i class="close icon" @click="clearTag"></i>
           <div class="header">
             {{ tagDetail.name }}
@@ -91,11 +94,12 @@ export default {
             {{ tagDetail.memo }}
           </p>
         </div>
-        <div class="ui top attached secondary pointing menu">
+        <div class="ui top green menu">
           <a class="item" v-bind:class="{'active': actived == 'new' }" @click="load('new')">最新发布</a>
           <a class="item" v-bind:class="{'active': actived == 'hot' }" @click="load('hot')">最热问题</a>
         </div>
-        <div class="ui bottom attached active tab segment" style="margin:0; padding: 6px 14px;">
+
+        <div class="ui bottom active tab " style="margin:0; padding: 6px 14px;">
           <div class="ui very relaxed divided list">
             <!-- 问题列表 -->
               <question-brief v-for="item in items"
@@ -109,6 +113,7 @@ export default {
                 :date="item.createdAt"
               >
               </question-brief>
+              <div class="ui text loader" :class="{'active': loading }"></div>
           </div>
 
         </div>
@@ -127,3 +132,28 @@ export default {
 
   <!-- <foot></foot> -->
 </template>
+
+<style scoped media="screen">
+.relaxed.divided {
+  position: relative;
+}
+.ui .loader {
+  top: 45%;
+  padding: 0px;
+}
+.ui.menu .item {
+  color: rgba(0, 0, 0, 0.65);
+}
+.ui.divided.list>.item {
+  border-top: 1px solid rgba(132, 136, 140, 0.15);
+}
+.ui.menu a.item:hover {
+  background-color: rgba(158, 158, 158, 0.07);
+  color: rgba(0, 0, 0, 0.65);
+}
+.ui.menu .active.item {
+  color: #80AD8B!important;
+  background: rgba(0,0,0,.0);
+}
+
+</style>
