@@ -13,6 +13,11 @@
       'navbar':Navbar
     },
     created() {
+      // 创建socket连接
+      let socket = io.connect(store.domain || `${location.protocol}//${location.host}`);
+      window.onunload = function() {
+        socket.disconnect();
+      };
       // 检测localstorege有没有token，并且确认是否已经登陆
       // 如果已经登陆， 取出 userBrief 并向下boradcast事件
       const token = localStorage.getItem('token')
@@ -50,6 +55,8 @@
           this.notifyCount = data;
         })
       }, 1000 * 10)
+
+
     },
     events: {
       'changeBrief': function (text) {
