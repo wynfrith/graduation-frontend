@@ -93,12 +93,12 @@ a.ui.header.title:hover {
 
 /* tag */
 .tags-box .ui.teal.label {
-  background-color: #afcb87 !important;
+  background-color: rgb(135, 179, 145) !important;
   padding: 3px 4px;
   border-radius: 2px;
 }
 .tags-box .ui.teal.label:hover {
-  background-color: #9DAD87 !important;
+  background-color: #A6C779 !important;
   color: rgba(0,0,0,.87);
 
 }

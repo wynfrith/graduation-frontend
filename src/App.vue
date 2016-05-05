@@ -49,7 +49,7 @@
         store.pullNotify().then(({data}) => {
           this.notifyCount = data;
         })
-      }, 1000 * 60)
+      }, 1000 * 10)
     },
     events: {
       'changeBrief': function (text) {
